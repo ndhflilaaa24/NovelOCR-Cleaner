@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="id" class="dark"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NovelOCR Cleaner &amp; AI Proofreader Pro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0b0f19;
+      color: #f1f5f9;
+    }
+    
+    .novel-font {
+      font-family: 'Lora', Georgia, serif;
+      line-height: 1.85;
+      font-size: 0.95rem;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+    @keyframes pulse-subtle {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.65; }
+    }
+    .animate-pulse-subtle {
+      animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+  </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.pointer-events-auto{pointer-events:auto}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0px}.bottom-5{bottom:1.25rem}.right-5{right:1.25rem}.top-0{top:0px}.z-20{z-index:20}.z-30{z-index:30}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}.mr-1{margin-right:0.25rem}.mb-3{margin-bottom:0.75rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.block{display:block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-14{height:3.5rem}.h-2{height:0.5rem}.h-2\.5{height:0.625rem}.h-full{height:100%}.max-h-\[520px\]{max-height:520px}.min-h-\[380px\]{min-height:380px}.min-h-screen{min-height:100vh}.w-14{width:3.5rem}.w-2{width:0.5rem}.w-2\.5{width:0.625rem}.w-72{width:18rem}.w-full{width:100%}.max-w-7xl{max-width:80rem}.max-w-md{max-width:28rem}.max-w-2xl{max-width:42rem}.flex-1{flex:1 1 0%}@keyframes ping{75%, 100%{transform:scale(2);opacity:0}}.animate-ping{animation:ping 1s cubic-bezier(0, 0, 0.2, 1) infinite}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}@keyframes spin{to{transform:rotate(360deg)}}.animate-spin{animation:spin 1s linear infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;user-select:none}.resize-none{resize:none}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.items-stretch{align-items:stretch}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-2\.5{gap:0.625rem}.gap-x-5{column-gap:1.25rem}.gap-y-2{row-gap:0.5rem}.space-x-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.375rem * var(--tw-space-x-reverse));margin-left:calc(0.375rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-4{border-width:4px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-amber-500\/30{border-color:rgb(245 158 11 / 0.3)}.border-emerald-500\/20{border-color:rgb(16 185 129 / 0.2)}.border-indigo-500\/30{border-color:rgb(99 102 241 / 0.3)}.border-rose-500\/30{border-color:rgb(244 63 94 / 0.3)}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.border-emerald-500\/40{border-color:rgb(16 185 129 / 0.4)}.border-indigo-500{--tw-border-opacity:1;border-color:rgb(99 102 241 / var(--tw-border-opacity, 1))}.border-indigo-500\/40{border-color:rgb(99 102 241 / 0.4)}.border-t-indigo-500{--tw-border-opacity:1;border-top-color:rgb(99 102 241 / var(--tw-border-opacity, 1))}.bg-amber-400{--tw-bg-opacity:1;background-color:rgb(251 191 36 / var(--tw-bg-opacity, 1))}.bg-amber-500\/15{background-color:rgb(245 158 11 / 0.15)}.bg-emerald-400{--tw-bg-opacity:1;background-color:rgb(52 211 153 / var(--tw-bg-opacity, 1))}.bg-emerald-500\/10{background-color:rgb(16 185 129 / 0.1)}.bg-indigo-500\/20{background-color:rgb(99 102 241 / 0.2)}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229 / var(--tw-bg-opacity, 1))}.bg-rose-500\/10{background-color:rgb(244 63 94 / 0.1)}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-slate-800\/60{background-color:rgb(30 41 59 / 0.6)}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-slate-900\/90{background-color:rgb(15 23 42 / 0.9)}.bg-slate-950\/50{background-color:rgb(2 6 23 / 0.5)}.bg-slate-950\/60{background-color:rgb(2 6 23 / 0.6)}.bg-slate-950\/90{background-color:rgb(2 6 23 / 0.9)}.bg-amber-500{--tw-bg-opacity:1;background-color:rgb(245 158 11 / var(--tw-bg-opacity, 1))}.bg-black\/75{background-color:rgb(0 0 0 / 0.75)}.bg-emerald-600\/20{background-color:rgb(5 150 105 / 0.2)}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23 / var(--tw-bg-opacity, 1))}.bg-slate-900\/95{background-color:rgb(15 23 42 / 0.95)}.bg-emerald-950\/95{background-color:rgb(2 44 34 / 0.95)}.bg-gradient-to-br{background-image:linear-gradient(to bottom right, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-indigo-500{--tw-gradient-from:#6366f1 var(--tw-gradient-from-position);--tw-gradient-to:rgb(99 102 241 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-indigo-600{--tw-gradient-from:#4f46e5 var(--tw-gradient-from-position);--tw-gradient-to:rgb(79 70 229 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.to-violet-500{--tw-gradient-to:#8b5cf6 var(--tw-gradient-to-position)}.to-violet-600{--tw-gradient-to:#7c3aed var(--tw-gradient-to-position)}.p-2\.5{padding:0.625rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-1{padding:0.25rem}.p-3\.5{padding:0.875rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-3\.5{padding-top:0.875rem;padding-bottom:0.875rem}.py-5{padding-top:1.25rem;padding-bottom:1.25rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.pb-6{padding-bottom:1.5rem}.pb-3{padding-bottom:0.75rem}.pt-3{padding-top:0.75rem}.text-center{text-align:center}.text-justify{text-align:justify}.indent-7{text-indent:1.75rem}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-0.025em}.tracking-wide{letter-spacing:0.025em}.tracking-wider{letter-spacing:0.05em}.text-amber-300{--tw-text-opacity:1;color:rgb(252 211 77 / var(--tw-text-opacity, 1))}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-emerald-300{--tw-text-opacity:1;color:rgb(110 231 183 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-emerald-50{--tw-text-opacity:1;color:rgb(236 253 245 / var(--tw-text-opacity, 1))}.text-indigo-300{--tw-text-opacity:1;color:rgb(165 180 252 / var(--tw-text-opacity, 1))}.text-indigo-400{--tw-text-opacity:1;color:rgb(129 140 248 / var(--tw-text-opacity, 1))}.text-indigo-600{--tw-text-opacity:1;color:rgb(79 70 229 / var(--tw-text-opacity, 1))}.text-rose-400{--tw-text-opacity:1;color:rgb(251 113 133 / var(--tw-text-opacity, 1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249 / var(--tw-text-opacity, 1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23 / var(--tw-text-opacity, 1))}.text-indigo-200{--tw-text-opacity:1;color:rgb(199 210 254 / var(--tw-text-opacity, 1))}.text-emerald-200{--tw-text-opacity:1;color:rgb(167 243 208 / var(--tw-text-opacity, 1))}.text-amber-200\/95{color:rgb(253 230 138 / 0.95)}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-amber-400\/50{--tw-shadow-color:rgb(251 191 36 / 0.5);--tw-shadow:var(--tw-shadow-colored)}.shadow-emerald-400\/50{--tw-shadow-color:rgb(52 211 153 / 0.5);--tw-shadow:var(--tw-shadow-colored)}.shadow-indigo-500\/20{--tw-shadow-color:rgb(99 102 241 / 0.2);--tw-shadow:var(--tw-shadow-colored)}.shadow-indigo-500\/25{--tw-shadow-color:rgb(99 102 241 / 0.25);--tw-shadow:var(--tw-shadow-colored)}.shadow-indigo-600\/30{--tw-shadow-color:rgb(79 70 229 / 0.3);--tw-shadow:var(--tw-shadow-colored)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.selection\:bg-indigo-500 *::selection{--tw-bg-opacity:1;background-color:rgb(99 102 241 / var(--tw-bg-opacity, 1))}.selection\:text-white *::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.selection\:bg-indigo-500::selection{--tw-bg-opacity:1;background-color:rgb(99 102 241 / var(--tw-bg-opacity, 1))}.selection\:text-white::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.placeholder\:text-slate-600::placeholder{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.empty\:before\:text-slate-600:empty::before{content:var(--tw-content);--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.empty\:before\:content-\[attr\(data-placeholder\)\]:empty::before{--tw-content:attr(data-placeholder);content:var(--tw-content)}.hover\:border-rose-500\/30:hover{border-color:rgb(244 63 94 / 0.3)}.hover\:bg-amber-500\/25:hover{background-color:rgb(245 158 11 / 0.25)}.hover\:bg-indigo-500:hover{--tw-bg-opacity:1;background-color:rgb(99 102 241 / var(--tw-bg-opacity, 1))}.hover\:bg-rose-500\/20:hover{background-color:rgb(244 63 94 / 0.2)}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.hover\:bg-amber-400:hover{--tw-bg-opacity:1;background-color:rgb(251 191 36 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-600\/30:hover{background-color:rgb(5 150 105 / 0.3)}.hover\:bg-slate-800:hover{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.hover\:from-indigo-500:hover{--tw-gradient-from:#6366f1 var(--tw-gradient-from-position);--tw-gradient-to:rgb(99 102 241 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.hover\:to-violet-500:hover{--tw-gradient-to:#8b5cf6 var(--tw-gradient-to-position)}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:text-slate-200:hover{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.focus\:border-amber-500:focus{--tw-border-opacity:1;border-color:rgb(245 158 11 / var(--tw-border-opacity, 1))}.focus\:border-indigo-500:focus{--tw-border-opacity:1;border-color:rgb(99 102 241 / var(--tw-border-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-indigo-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(99 102 241 / var(--tw-ring-opacity, 1))}.active\:scale-\[0\.99\]:active{--tw-scale-x:0.99;--tw-scale-y:0.99;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@media (min-width: 640px){.sm\:block{display:block}.sm\:inline{display:inline}.sm\:w-80{width:20rem}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:gap-3{gap:0.75rem}.sm\:p-5{padding:1.25rem}.sm\:p-7{padding:1.75rem}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:text-lg{font-size:1.125rem;line-height:1.75rem}}@media (min-width: 768px){.md\:flex{display:flex}.md\:flex-row{flex-direction:row}.md\:items-center{align-items:center}}@media (min-width: 1024px){.lg\:min-h-\[460px\]{min-height:460px}.lg\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}}</style></head>
+<body class="min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+
+  <!-- Toast Notification -->
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- Header -->
+  <header class="bg-slate-900/90 backdrop-blur-md border-b border-slate-800 px-4 sm:px-6 py-3.5 sticky top-0 z-30 shadow-lg">
+    <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
+      <!-- Brand -->
+      <div class="flex items-center space-x-3">
+        <div class="bg-gradient-to-br from-indigo-500 to-violet-600 p-2.5 rounded-xl shadow-lg shadow-indigo-500/25 flex items-center justify-center">
+          <i class="fa-solid fa-book-sparkles text-lg text-white"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base sm:text-lg font-bold tracking-tight text-white">NovelOCR Cleaner</h1>
+            <span class="text-[10px] font-semibold uppercase tracking-wider bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-2 py-0.5 rounded-full">AI Pro</span>
+          </div>
+          <p class="text-xs text-slate-400 hidden sm:block">Pembersih Artefak Scan PDF, Perbaikan Typo OCR &amp; Proofreader Novel Otomatis</p>
+        </div>
+      </div>
+
+      <!-- Status & Actions -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <div class="hidden md:flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-xl text-xs text-emerald-300">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>AI Editor Siap Pakai</span>
+        </div>
+
+        <button onclick="loadSampleText()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-xl border border-slate-700 transition flex items-center gap-1.5 shadow-sm" fdprocessedid="g9hrvq">
+          <i class="fa-solid fa-flask text-amber-400"></i>
+          <span>Muat Contoh OCR Rusak</span>
+        </button>
+
+        <button onclick="toggleRulesModal()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-xl border border-slate-700 transition flex items-center gap-1.5 shadow-sm" title="Lihat &amp; Sesuaikan 7 Aturan Sistem AI" fdprocessedid="fxhl0k">
+          <i class="fa-solid fa-sliders text-indigo-400"></i>
+          <span class="hidden sm:inline">7 Aturan AI</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-5 grid grid-cols-1 lg:grid-cols-2 gap-5">
+    
+    <!-- PANEL KIRI: INPUT MENTAH OCR -->
+    <div class="flex flex-col bg-slate-900 rounded-2xl border border-slate-800 shadow-xl overflow-hidden">
+      <!-- Panel Header -->
+      <div class="bg-slate-800/60 px-4 py-3 border-b border-slate-800 flex flex-wrap justify-between items-center gap-2">
+        <div class="flex items-center space-x-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-sm shadow-amber-400/50"></span>
+          <h2 class="font-semibold text-sm text-slate-100">Naskah Mentah (Hasil Scan / OCR)</h2>
+        </div>
+        <div class="flex items-center space-x-1.5">
+          <label class="cursor-pointer text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-2.5 py-1.5 rounded-lg border border-slate-700 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-file-arrow-up text-indigo-400"></i>
+            <span>Upload .TXT</span>
+            <input type="file" id="fileInput" accept=".txt" class="hidden" onchange="handleFileUpload(event)">
+          </label>
+          <button onclick="pasteFromClipboard()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-2.5 py-1.5 rounded-lg border border-slate-700 transition flex items-center gap-1" title="Tempel Teks" fdprocessedid="0lfspp">
+            <i class="fa-regular fa-paste"></i>
+            <span class="hidden sm:inline">Tempel</span>
+          </button>
+          <button onclick="clearInput()" class="text-xs bg-slate-800 hover:bg-rose-500/20 text-rose-400 hover:border-rose-500/30 px-2.5 py-1.5 rounded-lg border border-slate-700 transition" title="Bersihkan Input" fdprocessedid="n70lq5">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Textarea Input -->
+      <div class="relative flex-1 flex flex-col min-h-[380px] lg:min-h-[460px]">
+        <textarea id="inputText" oninput="updateStats('input')" placeholder="Tempelkan (paste) ribuan kata hasil scan/OCR PDF novel berbahasa Indonesia di sini...
+
+Klik tombol 'Muat Contoh OCR Rusak' di bagian atas untuk melihat simulasi perbaikan otomatis:
+• Menghapus simbol liar (@, |, \, ~, /, angka nyempil m4kan -&gt; makan)
+• Memperbaiki typo OCR (rn -&gt; m, cl -&gt; d, l -&gt; i, 0 -&gt; o)
+• Merapikan paragraf terputus &amp; mengembalikan tanda petik dialog
+• Cetak miring (*italic*) istilah bahasa asing &amp; dialog batin
+• Menjaga estetika format pesan singkat / chat di dalam novel" class="flex-1 w-full bg-slate-950/50 p-4 sm:p-5 text-slate-200 placeholder:text-slate-600 focus:outline-none resize-none novel-font"></textarea>
+      </div>
+
+      <!-- Panel Footer Stats -->
+      <div class="bg-slate-900 px-4 py-2.5 border-t border-slate-800 flex flex-wrap justify-between items-center gap-2 text-xs text-slate-400">
+        <div class="flex items-center space-x-4">
+          <span>Kata: <strong id="inputWords" class="text-slate-200 font-semibold">3.071</strong></span>
+          <span>Karakter: <strong id="inputChars" class="text-slate-200 font-semibold">21.685</strong></span>
+          <span>Batch Paralel: <strong id="batchCount" class="text-indigo-400 font-semibold">2</strong> <span class="text-[11px] text-slate-500">(4x lipat lebih cepat)</span></span>
+        </div>
+        <span id="inputHint" class="text-[11px] text-emerald-400 font-medium"><i class="fa-solid fa-gauge-high mr-1"></i>Engine Turbo Aktif</span>
+      </div>
+    </div>
+
+    <!-- PANEL KANAN: HASIL SUNTINGAN BERSIH -->
+    <div class="flex flex-col bg-slate-900 rounded-2xl border border-slate-800 shadow-xl overflow-hidden">
+      <!-- Panel Header -->
+      <div class="bg-slate-800/60 px-4 py-3 border-b border-slate-800 flex flex-wrap justify-between items-center gap-2">
+        <div class="flex items-center space-x-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400/50"></span>
+          <h2 class="font-semibold text-sm text-slate-100">Hasil Suntingan Bersih</h2>
+        </div>
+
+        <div class="flex items-center space-x-1.5">
+          <!-- Toggle Mode Baca / Edit -->
+          <button onclick="togglePreviewMode()" id="previewBtn" class="text-xs bg-indigo-600 hover:bg-slate-700 text-slate-200 px-2.5 py-1.5 rounded-lg border border-indigo-500 transition flex items-center gap-1.5" title="Pratinjau Cetak Miring &amp; Gelembung Chat" fdprocessedid="3gza9b">
+            <i class="fa-solid fa-code text-white" id="previewIcon"></i>
+            <span id="previewBtnText">Lihat Teks Polos</span>
+          </button>
+
+          <!-- Tombol Salin -->
+          <button onclick="copyOutput()" class="text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-medium px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow-sm shadow-indigo-500/20" title="Salin teks beserta format cetak miring (Italic) ke Word / Docs" fdprocessedid="lmvax9">
+            <i class="fa-regular fa-copy"></i>
+            <span>Salin (Format Miring Aktif)</span>
+          </button>
+
+          <!-- Tombol Unduh TXT -->
+          <button onclick="downloadOutput('txt')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-2.5 py-1.5 rounded-lg border border-slate-700 transition flex items-center gap-1" title="Unduh File .TXT" fdprocessedid="4pqad9">
+            <i class="fa-solid fa-download text-slate-400"></i>
+            <span>.TXT</span>
+          </button>
+
+          <!-- Tombol Unduh DOC (Word) -->
+          <button onclick="downloadOutput('doc')" class="text-xs bg-slate-800 hover:bg-slate-700 text-emerald-300 px-2.5 py-1.5 rounded-lg border border-slate-700 transition flex items-center gap-1" title="Unduh File Microsoft Word (.DOC) dengan Format Italic &amp; Paragraf" fdprocessedid="fcqpgq">
+            <i class="fa-solid fa-file-word text-emerald-400"></i>
+            <span>.DOC</span>
+          </button>
+
+          <!-- Tombol Unduh EPUB (E-Book) -->
+          <button onclick="openEpubModal()" class="text-xs bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 px-2.5 py-1.5 rounded-lg border border-amber-500/30 transition flex items-center gap-1 font-medium shadow-sm" title="Unduh File E-Book (.EPUB) Siap Baca di Play Books / Apple Books / Moon+ Reader" fdprocessedid="7c73xr">
+            <i class="fa-solid fa-book-bookmark text-amber-400"></i>
+            <span>.EPUB</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Area Output (Textarea & Mode Baca HTML) -->
+      <div class="relative flex-1 flex flex-col min-h-[380px] lg:min-h-[460px]">
+        <div id="outputPreview" contenteditable="true" oninput="syncFromRichEditor()" data-placeholder="Hasil suntingan novel yang bersih akan langsung tampil di sini dengan huruf cetak miring (italic) asli tanpa tanda bintang..." class="flex-1 w-full bg-slate-950/60 p-5 sm:p-7 text-slate-100 overflow-y-auto novel-font space-y-4 max-h-[520px] focus:outline-none empty:before:content-[attr(data-placeholder)] empty:before:text-slate-600"><p class="indent-7 text-justify leading-relaxed text-slate-100">depan kelas dengan gempar melaporkan, pasukan Jerman memasuki negeri Belanda dan mereka hanya butuh waktu empat hari untuk mendudukinya. Anak-anak sekolah dibuat terpana, atau terkagum-kagum, bahwa perang ternyata sungguh-sungguh ada dan bukan sekadar omong kosong cerita di buku sejarah. Lebih dari itu, perang tersebut melanda negeri leluhur mereka, dan Belanda ternyata kalah.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Setelah Prancis, kini Jerman mendudukinya," kata Dewi Ayu.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Benar-benar negeri yang malang."</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Dewi Ayu, apa maksudmu?" tanya Suster Maria.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Maksudku, kita punya terlalu banyak pedagang daripada tentara."</p><p class="indent-7 text-justify leading-relaxed text-slate-100">Ia memperoleh hukuman membaca Mazmur karena komentarnya yang kurang ajar. Bagaimanapun, di antara banyak teman sekolahnya, Dewi Ayu merupakan satu-satunya anak yang menikmati berita perang dan membuat ramalan yang mengerikan: perang akan sampai ke Hindia Belanda, dan bahkan ke Halimunda. Meskipun begitu ia ikut doa bersama yang diadakan para suster untuk keselamatan keluarga-keluarga mereka yang tinggal di Eropa, tak peduli Dewi Ayu merasa tak memiliki siapa pun di sana. Kecemasan terhadap perang juga melanda rumah, terutama karena kakek dan neneknya, Ted dan Marietje Stammler, punya banyak keluarga di Belanda. Mereka terus-menerus bertanya soal surat-surat dari Belanda, yang tak juga muncul. Dan terutama, mereka mengkhawatirkan ayah dan ibu Dewi Ayu, Henri dan Aneu Stammler, yang melarikan diri kemungkinan besar ke Eropa. Mereka pergi begitu saja di suatu pagi enam belas tahun lalu, tanpa pamit, hanya meninggalkan Dewi Ayu yang masih orok. Meskipun apa yang mereka lakukan sungguh-sungguh membuat keluarga itu berang, kenyataannya mereka tetap mengkhawatirkannya.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Di mana pun mereka berada, kuharap mereka bahagia," kata Ted Stammler.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Dan jika Jerman membunuh mereka, keduanya akan hidup bahagia di sorga," kata Dewi Ayu. Ia kemudian membalasnya sendiri: "Amin."</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Setelah enam belas tahun, kemarahanku telah dibuat reda," kata Marietje. "Berharaplah kau bisa bertemu dengan mereka." Kalimatnya ditujukan untuk Dewi Ayu.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Tentu saja, Oma. Mereka berhutang enam belas hadiah Natal dan enam belas kado ulang tahun. Itu belum termasuk enam belas telur Paskah."</p><p class="indent-7 text-justify leading-relaxed text-slate-100">Ia telah mendengar kisah tentang kedua orang itu, Henri dan Aneu Stammler. Beberapa jongos dapur menceritakannya sambil berbisik, sebab jika Ted atau Marietje tahu bahwa mereka membocorkan cerita tersebut pada gadis itu, kemungkinan besar mereka akan dicambuk. Tapi lama-kelamaan Ted dan Marietje tampaknya tahu bahwa Dewi Ayu telah mendengar ceritanya, termasuk bahwa suatu pagi mereka menemukannya tergeletak di dalam keranjang di depan pintu. Ia tidur nyenyak dalam balutan selimut, ditemani secarik kertas bertuliskan namanya, serta tulisan pendek yang menyatakan kedua orang tuanya telah berlayar dengan kapal Aurora menuju Eropa. Sejak awal ia memang telah dibuat heran kenapa ia tak punya orang tua, dan hanya punya opa dan oma dan tante. Tapi ketika ia mengetahui bahwa ayah dan ibunya kabur di suatu pagi, bukannya marah, sebaliknya ia sedikit mengagumi keduanya.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Mereka petualang-petualang sejati," katanya pada Ted Stammler.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Kau terlalu banyak baca buku cerita, Nak," kata kakeknya.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Mereka orang-orang religius," katanya lagi. "Di dalam kitab suci diceritakan seorang ibu membuang anaknya ke Sungai Nil."</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Itu berbeda."</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Ya, memang. Aku dibuang di depan pintu."</p><p class="indent-7 text-justify leading-relaxed text-slate-100">Itu benar-benar skandal memalukan, sebab bagaimanapun, baik Henri maupun Aneu keduanya anak Ted Stammler. Keduanya telah hidup serumah sejak mereka masih orok, dan tak seorang pun menyadari kalau keduanya jatuh cinta satu sama lain. Henri dua tahun lebih tua dari Aneu, dilahirkan dari rahim Marietje, sementara Aneu anak Ted dari seorang gundik pribumi bernama Ma Iyang. Meskipun Ma Iyang tinggal di rumah yang berbeda dan dijaga oleh dua orang jawara, Ted telah memutuskan untuk membawa Aneu tinggal bersamanya sejak ia dilahirkan, meskipun untuk itu ia harus bertengkar hebat dengan Marietje. Tapi apa boleh buat, kebanyakan lelaki memelihara gundik dan anak-anak haram jadah mereka. Marietje akhirnya sepakat bocah itu tinggal serumah dengan mereka, memberinya nama keluarga, agar tidak jadi gunjingan orang-orang di rumah bola.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">Mereka tumbuh bersama-sama, hingga waktunya cukup bagi keduanya untuk jatuh cinta satu sama lain. Henri pemuda yang menyenangkan, pandai berburu babi bersama anjing-anjing Borzoi yang didatangkan langsung dari Rusia, pemain bola yang baik, pandai berenang sebagaimana berdansa. Sementara Aneu telah tumbuh jadi gadis cantik, menghabiskan waktu dengan main piano dan bernyanyi dengan suara sopranonya. Ted dan Marietje melepaskan mereka untuk pergi ke pasar malam dan ke rumah dansa, sebab telah waktunya bagi mereka untuk berhura-hura, dan mungkin menemukan kekasih yang cocok. Itu merupakan awal malapetaka, sebab selepas berdansa sampai tengah malam dan pesta minum limun di restoran, mereka tak pulang ke rumah. Ted dibuat khawatir sebab mereka seharusnya telah pulang, dan bersama dua orang jawara mereka mencarinya ke pasar malam. Mereka hanya menemukan komidi putar yang gelap dan tak bergerak, rumah hantu yang telah dikunci rapat-rapat, rumah dansa yang kosong, kios-kios penjual makanan yang telah tutup, serta beberapa petugas yang tergeletak tidur kelelahan di emperan kios-kios. Tak ada tanda-tanda mereka masih di sana, hingga Ted akhirnya harus menelusuri keberadaan mereka melalui teman-teman sebayanya, dan seseorang berkata:</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Henri dan Aneu pergi ke daerah teluk."</p><p class="indent-7 text-justify leading-relaxed text-slate-100">Tak ada apa-apa di teluk pada malam hari kecuali beberapa penginapan. Ted memeriksa satu per satu penginapan itu dan menemukan keduanya di satu kamar. Telanjang dan tampak terkejut. Ted tak pernah bicara apa pun pada mereka dan keduanya tak pernah pulang ke rumah. Tak ada yang tahu di mana mereka tinggal setelah itu. Mungkin di beberapa penginapan dan hidup dengan kerja serampangan, jika bukan dari uang pinjaman atau sedekah teman-teman mereka. Kemungkinan lain mereka pergi ke hutan di daerah tanjung dan hidup dengan makan buah-buahan dan daging rusa di sana. Seseorang yang lain mengatakan bahwa mereka pergi ke Batavia dan salah satu dari mereka bekerja di perusahaan kereta api. Ted dan Marietje tak pernah tahu keberadaan mereka sampai suatu pagi Ted menemukan seorang bayi dalam keranjang di depan pintu.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Bayi itu adalah kau, mereka memberimu nama Dewi Ayu," kata Ted.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Dan mereka membuat lebih banyak anak di atas Aurora, semoga di Eropa ada banyak keranjang dan pintu rumah," kata si gadis.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Ketika tahu hal itu, nenekmu menjadi histeris seperti orang gila. Ia lari dari rumah dan tak terkejar bahkan oleh kuda dan mobil sampai kami menemukannya di puncak bukit cadas. Ia tak pernah turun, tapi terbang dari sana."</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Oma Marietje terbang?" tanya Dewi Ayu.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Bukan, Ma Iyang."</p><p class="indent-7 text-justify leading-relaxed text-slate-100">Gundik itu, neneknya yang lain. Kata kakeknya, jika ia duduk di beranda belakang dan memandang ke utara, ia akan melihat dua bukit cadas kecil. Bukit yang di sebelah barat adalah tempat Ma Iyang terbang dan lenyap di langit, dan orang-orang di kampung-kampung sekitar kemudian menyebut bukit itu seperti namanya: Ma Iyang. Itu mengagumkan, sekaligus menyedihkan. Dewi Ayu sering duduk sendirian di sore hari dan memandang bukit itu, berharap melihatnya masih melayang-layang seperti seekor capung. Hanya perang yang kemudian mengalihkan perhatiannya, dan Dewi Ayu mulai lebih sering duduk di depan radio mendengar laporan-laporan dari garis depan daripada menghabiskan waktu memandangi bukit tersebut. Meskipun masih jauh, namun akhirnya pengaruh perang mulai terasa sampai Halimunda. Bersama beberapa orang Belanda lainnya, Ted Stammler memiliki perkebunan cokelat dan kelapa, yang terbesar di wilayah tersebut. Perdagangan dunia yang porak-poranda karena perang membuat bisnis mereka seperti tanpa harapan, dan itu berakibat pada penghasilan mereka. Penghematan-penghematan yang ketat mulai diberlakukan di keluarga tersebut. Marietje hanya belanja kebutuhan dapur dari penjual-penjual kelontong yang berkeliling dari rumah ke rumah. Hanneke menghentikan kebiasaannya pergi ke bioskop dan membeli piringan hitam. Bahkan Mr. Willie, lelaki Indo yang bekerja untuk mereka di perkebunan sebagai penjaga dan sebagai pengurus kendaraan, harus mengurangi jatah peluru bagi senapannya serta bahan bakar bagi mobil Collibri. Sementara Dewi Ayu harus mengungsi ke asrama sekolah. Para biarawati Franciscan mencoba membantu mereka di masa perang dengan cara itu. Mereka membuka pintu asrama lebar-lebar tanpa biaya apa pun. Itu waktu-waktu ketika semua pelajaran sekolah hanya berisi cerita tentang perang, yang diceritakan dengan penuh khawatir bahwa perang itu akhirnya sungguh-sungguh sampai di kota ini, di halaman depan rumah mereka. Dewi Ayu yang tak sabar dengan pembicaraan tanpa henti itu kemudian berdiri dan berkata dengan lantang:</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Daripada duduk kebanyakan bicara, kenapa kita tidak belajar menembak dengan senapan dan meriam?"</p><p class="indent-7 text-justify leading-relaxed text-slate-100">Untuk kata-katanya, dengan sangat terpaksa para biarawati itu kemudian mengirimnya pulang ke rumah. Mereka menghukumnya selama seminggu dan hanya karena perang kakeknya tak memberi hukuman tambahan. Ia kembali ke sekolah meskipun tak tinggal di biara pada hari yang sama ketika bom jatuh di Pearl Harbor, dan Suster Maria yang mengajar sejarah dengan muka berseri-seri berkomentar, "Saatnya Amerika turun tangan." Tiba-tiba mereka mulai menyadari bahwa perang sudah demikian dekat, merayap bagaikan seekor kadal di rerumputan, perlahan-lahan namun pasti mulai menutupi permukaan bumi dengan darah dan mesiu. Ramalan Dewi Ayu tampaknya segera akan terbukti. Memang bukan pasukan Jerman yang tengah mendekat, tapi Jepang. Bagaikan seekor harimau mengencingi daerah kekuasaannya, bendera-bendera matahari merah mulai berkibar di Filipina, dan tiba-tiba sudah berkibar pula di Singapura. Di rumah, hal itu menjadi masalah yang lebih besar lagi dan nyaris tak bisa dipecahkan. Sebagaimana semua lelaki dewasa, Ted Stammler yang belum termasuk golongan orang tua jompo memperoleh panggilan untuk masuk wajib militer. Ini sungguh-sungguh keadaan yang jauh lebih menyusahkan daripada penghematan-penghematan uang belanja. Hanneke memberinya beberapa jimat sambil menangis dan Dewi Ayu memberinya nasihat bagus, "Tertawan musuh jauh lebih menguntungkan daripada tertembak mati." Ted akhirnya pergi tanpa seorang pun tahu ia akan ditempatkan di mana. Kemungkinan besar di Sumatera untuk menghadang laju tentara Jepang menuju Jawa. Bersama lelaki-lelaki lain, sebagian besar merupakan keluarga orang-orang perkebunan, Ted berangkat meninggalkan Halimunda dan keluarga.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Sumpah mati, ia bahkan belum pernah menembak babi dengan tepat," kata Marietje sambil menangis ketika melepasnya di alun-alun kota. Kini perempuan itu menjadi kepala keluarga menggantikan suaminya, tampak menyedihkan sehingga anak dan cucunya mencoba terus menghibur. Mr. Willie datang hampir tiap hari untuk membantu mereka melakukan beberapa pekerjaan lelaki. Ia tak ikut memperoleh panggilan wajib militer karena beberapa hal: ia seorang Indo dan tak pernah mencatatkan diri sebagai warga negara Belanda, kakinya sedikit cacat ketika suatu hari diseruduk seekor babi liar.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Tenanglah, Oma, mata orang-orang Jepang terlalu kecil untuk melihat nama Halimunda di dalam peta," kata Dewi Ayu. Tentu saja ia sekadar ingin menghibur, namun Marietje sama sekali tak bisa dibuat tersenyum. Kemurungan melanda hampir seluruh kota. Pasar malam tak lagi diadakan, dan rumah bola tak lagi dikunjungi orang. Tak ada acara dansa dan kantor perkebunan hanya dijaga beberapa orang perempuan dan lelaki-lelaki tua. Orang-orang hanya bertemu di kolam renang, berendam dan tak berkata satu sama lain. Hanya orang-orang pribumi yang tak terganggu oleh apa pun. Mereka tetap melakukan apa yang mereka lakukan. Para penarik cikar tetap berbondong-bondong menuju pelabuhan, sebab perdagangan terus berjalan dan kapal-kapal pengangkut terus bergerak. Petani-petani masih mengerjakan sawah mereka dan nelayan-nelayan pergi ke laut setiap malam. Kemurungan mereka sangat beralasan, sebab sebelumnya ada beberapa orang Jepang tinggal di Halimunda, beberapa di antara mereka hidup sebagai petani, pedagang dan bahkan tukang foto, beberapa lagi pemain akrobat di sirkus. Pada waktu-waktu itu mereka tiba-tiba menghilang, dan semua orang segera menyadari selama ini mereka tinggal bersama mata-mata musuh. Tentara-tentara reguler berdatangan ke Halimunda, yang tampaknya akan menjadi gerbang pengungsian besar-besaran ke Australia. Bagaimanapun, pelabuhan kapal Halimunda merupakan satu-satunya yang terbesar di sepanjang pantai selatan Pulau Jawa. Pada awalnya tak lebih sebagai pelabuhan ikan kecil biasa, di muara Sungai Rengganis yang besar, sebab letaknya di luar tradisi pelayaran. Orang berkumpul di pelabuhan tersebut hanya untuk tukar-menukar barang, antara orang-orang sepanjang pesisir dengan orang-orang pedalaman. Para nelayan menjual ikan, garam, dan terasi, dan mereka menukarnya dengan rempah-rempah, beras, dan sayuran. Jauh sebelum itu Halimunda hanyalah sebuah hamparan rawa-rawa dan hutan berkabut luas tanpa pemilik. Seorang putri dari generasi terakhir Pajajaran melarikan diri ke daerah itu, memberinya nama, dan beranak-pinak menjadikannya perkampungan-perkampungan. Sementara itu Kerajaan Mataram memperlakukannya lebih sebagai tempat pembuangan pangeran-pangeran pembangkang. Dan orang-orang Belanda sama sekali tak tertarik dengan wilayah itu, terutama karena serangan ganas malaria di daerah berawa-rawa, banjir yang tak terkendali, dan jalan yang masih buruk. Sampai pertengahan abad delapan belas, satu-satunya kapal besar yang pernah singgah di sana hanyalah kapal Inggris bernama <i class="text-amber-200/95 italic">Royal George</i>, yang datang bukan untuk berdagang, tapi sekadar ambil air tawar. Bagaimanapun, itu cukup untuk membuat penguasa Kompeni sedikit berang dan mencurigai orang-orang Inggris telah membeli kopi dan nila, bahkan mungkin mutiara. Mereka bahkan curiga Inggris menyelundupkan senjata melalui Halimunda untuk pasukan Diponegoro. Akhirnya ekspedisi pertama orang-orang Belanda datang, sekadar untuk melihat, dan membuat peta. Orang Belanda pertama yang tinggal di sana adalah seorang letnan tentara bersama dua sersan dan dua kopral. Mereka ditemani sekitar enam puluhan prajurit bersenjata senapan, dan sebuah garnisun kecil resmi membuka posnya di Halimunda. Itu setelah perang Diponegoro berakhir, dan ketika sistem Tanam Paksa mulai diberlakukan. Sebelum itu, hasil pertanian, terutama kopi dan nila yang melimpah di pedalaman Halimunda sebelum orang-orang Belanda juga menanam cokelat, dibawa melalui jalan darat membelah Pulau Jawa menuju Batavia. Banyak risiko yang harus diambil: barang membusuk dan terutama perompak di sepanjang jalan. Saat itulah pelabuhan laut Halimunda mulai dibuka dan hasil pertanian bisa langsung diangkut kapal ke Eropa untuk dijual. Mereka mulai membangun jalan-jalan yang lebih lebar untuk lalu-lalang pedati dan cikar. Kanal-kanal dibuat untuk menghindari banjir, dan di sekeliling pelabuhan gudang-gudang mulai didirikan. Meskipun tak pernah terlalu berarti dibandingkan pelabuhan mana pun di laut utara, Halimunda tampaknya mulai diperhitungkan.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">pemerintah kolonial, hingga akhirnya pelabuhan itu dibuka untuk perusahaan swasta. Perusahaan pertama yang beroperasi di kota itu tentu saja <i class="text-amber-200/95 italic">Nederlandsch Indisch Stoomvaartmaatschappij</i>, yang mengoperasikan beberapa kapal layar. Beberapa perusahaan pergudangan juga berdiri. Terutama setelah pembukaan jalan kereta api yang melintang ke barat dan ke timur. Namun sejak berdirinya garnisun pertama di Halimunda, dan kenyataan perdagangan yang tak pernah sungguh-sungguh mencapai masa keemasan, pemerintah kolonial mengembangkan kota itu lebih sebagai kantong militer. Mereka melihat alasan yang jauh lebih strategis, bahwa kota itu merupakan satu-satunya pelabuhan besar di pantai selatan, seperti pintu belakang tempat mereka bisa melakukan evakuasi ke Australia tanpa melalui Selat Sunda dan Bali jika perang besar meletus.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">Mereka mulai membangun benteng-benteng, dan memasang meriam pantai untuk melindungi pelabuhan dan kota. Menara pengintai didirikan di puncak bukit di hutan daerah tanjung tempat bertahun-tahun sebelumnya putri keturunan raja Pajajaran itu tinggal, dan seratus orang pasukan artileri didatangkan untuk mengisi tangsi. Persenjataan mereka diperbaharui dua puluh tahun setelah itu dengan menempatkan dua puluh lima Kanon Armstrong ukuran dua puluh empat sentimeter. Rencana pertahanan itu memuncak dengan dibangunnya perumahan militer, barak-barak, di awal abad kedua puluh. Itu mengawali banyak hal di Halimunda: tempat pelacuran, rumah sakit, upaya pemberantasan malaria, rumah bola, hingga para pengusaha Belanda mulai tumpah di kota itu dan beberapa di antara mereka mendirikan perkebunan cokelat yang masih ada sampai bertahun-tahun kemudian.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">Ketika perang meletus dan Belanda diduduki tentara Jerman, semua fasilitas militer diperbaiki dan prajurit-prajurit semakin banyak berdatangan ke kota itu. Kemudian radio memberitahu bahwa dua kapal perang Inggris <i class="text-amber-200/95 italic">Prince of Wales</i> dan <i class="text-amber-200/95 italic">Repulse</i> berhasil ditenggelamkan Jepang dan Malaya jatuh ke tentara musuh. Kemenangan Jepang tak hanya sampai di sana. Tak lama setelah Malaya direbut, Letjen Arthur Percival, Panglima Besar Pertahanan Inggris, menandatangani naskah penyerahan Singapura, benteng pertahanan Inggris yang konon merupakan yang terkuat.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">Segalanya tampak semakin memburuk, sampai pagi ketika seorang kontrolir datang ke rumah-rumah penduduk Halimunda dan mengatakan hal yang paling mengerikan, "Surabaya telah dibom Jepang."</p><p class="indent-7 text-justify leading-relaxed text-slate-100">Para buruh pribumi meninggalkan pekerjaan mereka dan semua urusan perdagangan beku. "Kalian harus mengungsi, Nyonya," katanya pada Marietje Stammler, yang tak berkata apa-apa ditemani Hanneke dan Dewi Ayu.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">Dengan cepat kota itu disesaki oleh pengungsi, yang datang dengan kereta atau kendaraan keluarga. Mobil-mobil bergeletakan begitu saja di luar kota, memenuhi parit-parit sementara pemiliknya antre bermalam-malam untuk memperoleh kesempatan naik ke atas kapal. Sekitar lima puluh kapal militer datang ke pelabuhan untuk membantu evakuasi. Segalanya tampak kacau dan kekalahan Hindia Belanda sepertinya telah dipastikan. Keluarga Stammler yang hanya tersisa tiga orang segera berkemas setelah memperoleh kepastian kapan mereka bisa berangkat, namun dikejutkan oleh keputusan Dewi Ayu yang tiba-tiba.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Aku tak akan pergi."</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Jangan tolol, Nak," kata Hanneke. "Jepang tak akan melewatkanmu."</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Bagaimanapun, seorang Stammler harus tetap di sini," katanya keras kepala. "Dan kelak, kalian tahu siapa yang harus dicari."</p><p class="indent-7 text-justify leading-relaxed text-slate-100">Marietje dibuat menangis menghadapi kekeraskepalaannya, dan berkata, "Mereka akan jadikan kau tawanan."</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Oma, namaku Dewi Ayu dan semua orang tahu itu nama pribumi."</p><p class="indent-7 text-justify leading-relaxed text-slate-100">Setelah Surabaya digempur bom Jepang, mereka meneruskan sasarannya ke Tanjung Priok. Beberapa pejabat tinggi pemerintah kolonial mulai berdatangan dan mereka adalah orang-orang pertama yang kabur. Marietje dan Hanneke Stammler akhirnya naik kapal Zaandam yang tergolong sangat besar tanpa pernah mengetahui nasib Ted di medan perang, meninggalkan Dewi Ayu yang bersikeras menunggui rumah. Kapal itu telah bolak-balik mengangkut penumpang, dan sesungguhnya itu merupakan pelayarannya yang terakhir. Bersama sebuah kapal lainnya, keduanya berpapasan dengan kapal penjelajah Jepang. Zaandam ditenggelamkan tanpa perlawanan dan Dewi Ayu, ditemani Mr. Willie dan beberapa jongos serta jawara, memulai hari berkabung mereka.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">Sebuah infanteri Jepang dari divisi keempat puluh delapan, mendarat di Kragan setelah bertempur di Bataan, Filipina. Separuh dari mereka bergerak ke Malang melalui Surabaya, dan separuhnya lagi tiba di Halimunda, menamakan diri mereka sebagai Brigade Sakaguchi. Pesawat-pesawat terbang Jepang telah beterbangan di langit dan menjatuhkan bom untuk kilang-kilang minyak milik <i class="text-amber-200/95 italic">Bataafsche Petroleum Maatschappij</i>, pabrik minyak kelapa <i class="text-amber-200/95 italic">Mexolie Olvado</i> dan perumahan buruh serta kantor perkebunan cokelat dan kelapa.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">Brigade Sakaguchi hanya membutuhkan waktu dua hari pertempuran dengan tentara KNIL yang masih bertahan di luar kota sebelum Jenderal P. Meijer menerima kabar Belanda telah menyerah di Kalijati. Seluruh Hindia Belanda telah runtuh dan diduduki. Jenderal P. Meijer akhirnya menyerahkan kekuasaan Halimunda kepada Jepang, di pendopo balaikota. Dewi Ayu menyaksikan dan mendengar semua peristiwa tersebut, namun selama masa berkabung ia tak bicara pada siapa pun. Ia lebih sering duduk di beranda belakang rumah mereka, memandang bukit yang disebut Ted bernama Ma Iyang. Suatu sore ia melihat Mr. Willie muncul di halaman belakang, ditemani seekor anjing Borzoi yang konon peranakan anjing yang dulu dipelihara ayahnya, Henri. Untuk pertama kali sejak masa berkabung, ia akhirnya berkata:</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Yang satu terbang, yang lain tenggelam."</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Ada apa, Nona?" tanya Mr. Willie.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Aku hanya mengenang kedua nenekku," katanya.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Berbuatlah sesuatu, Nona, pelayan-pelayan tampak kebingungan."</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Bukankah kau sekarang pemilik keluarga ini?" Ia mengangguk. Maka senja itu ia menyuruh Mr. Willie mengumpulkan semua pelayan rumah tersebut: tukang masak, tukang cuci, pembantu di perkebunan, para jawara. Ia berkata pada mereka, bahwa sekarang ia tuan tunggal di rumah tersebut. Semua perintahnya harus dipenuhi, dan tak seorang pun diperbolehkan membangkang. Ia tak akan mencambuk siapa pun, tapi jika Ted Stammler pulang, ia akan mencambuk semua pembangkang, dan memasukkan mereka ke kandang ajak. Perintah pertamanya sama sekali tak memberatkan siapa pun, tapi itu membuat mereka terguncang dan kebingungan.</p><p class="indent-7 text-justify leading-relaxed text-slate-100">"Malam ini juga, seseorang harus menculik seorang lelaki tua ber-</p></div>
+
+        <textarea id="outputText" oninput="updateStats('output')" placeholder="Mode Teks Mentah..." class="hidden flex-1 w-full bg-slate-950/50 p-4 sm:p-5 text-emerald-50 placeholder:text-slate-600 focus:outline-none resize-none novel-font"></textarea>
+
+        <!-- Overlay Progress saat AI Bekerja -->
+        <div id="loadingOverlay" class="absolute inset-0 bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-center p-6 z-20 hidden">
+          <div class="relative mb-5">
+            <div class="w-14 h-14 border-4 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin"></div>
+            <i class="fa-solid fa-wand-magic-sparkles text-indigo-400 absolute inset-0 flex items-center justify-center text-sm animate-pulse"></i>
+          </div>
+          <h3 id="loadingTitle" class="text-sm font-bold text-white mb-1 tracking-wide">Memproses Serentak Bagian 1 - 2 dari 2...</h3>
+          <p id="loadingSub" class="text-xs text-slate-400 mb-5 text-center max-w-md">Membersihkan artefak OCR, memperbaiki typo, menata dialog, dan memformat istilah asing...</p>
+          
+          <!-- Progress Bar -->
+          <div class="w-72 sm:w-80 bg-slate-800 rounded-full h-2.5 overflow-hidden mb-2 border border-slate-700">
+            <div id="progressBar" class="bg-gradient-to-r from-indigo-500 to-violet-500 h-full transition-all duration-300 rounded-full" style="width: 100%;"></div>
+          </div>
+          <span id="progressPercent" class="text-[11px] text-indigo-300 font-medium mb-4">100% Selesai dalam 13.0 detik</span>
+
+          <button onclick="cancelProcess()" class="text-xs bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-4 py-1.5 rounded-lg transition" fdprocessedid="hdho4j">
+            <i class="fa-solid fa-stop mr-1"></i> Hentikan Proses
+          </button>
+        </div>
+      </div>
+
+      <!-- Panel Footer Stats -->
+      <div class="bg-slate-900 px-4 py-2.5 border-t border-slate-800 flex flex-wrap justify-between items-center gap-2 text-xs text-slate-400">
+        <div class="flex items-center space-x-4">
+          <span>Kata: <strong id="outputWords" class="text-emerald-400 font-semibold">3.003</strong></span>
+          <span>Karakter: <strong id="outputChars" class="text-emerald-400 font-semibold">21.619</strong></span>
+        </div>
+        <span id="statusBadge" class="text-xs text-slate-400 flex items-center gap-1.5"><i class="fa-solid fa-bolt text-emerald-400"></i> Selesai dalam 13.0 dtk (2 batch paralel)</span>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Control Bar Bawah (Tombol Eksekusi Utama) -->
+  <section class="max-w-7xl w-full mx-auto px-4 sm:px-6 pb-6">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 shadow-2xl">
+      
+      <!-- Opsi Filter Pembersihan -->
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-300">
+        <span class="text-slate-500 font-semibold uppercase tracking-wider text-[11px] flex items-center gap-1">
+          <i class="fa-solid fa-filter text-indigo-400"></i> Modul Aktif:
+        </span>
+        <label class="flex items-center space-x-2 cursor-pointer select-none hover:text-white transition">
+          <input type="checkbox" id="optFixTypoOCR" checked="" class="rounded bg-slate-800 border-slate-700 text-indigo-600 focus:ring-indigo-500">
+          <span>Artefak &amp; Typo OCR (`rn`→`m`, `cl`→`d`, angka nyempil)</span>
+        </label>
+        <label class="flex items-center space-x-2 cursor-pointer select-none hover:text-white transition">
+          <input type="checkbox" id="optMergeLines" checked="" class="rounded bg-slate-800 border-slate-700 text-indigo-600 focus:ring-indigo-500">
+          <span>Satukan Paragraf Terputus &amp; Rapikan Dialog</span>
+        </label>
+        <label class="flex items-center space-x-2 cursor-pointer select-none hover:text-white transition">
+          <input type="checkbox" id="optKeepChat" checked="" class="rounded bg-slate-800 border-slate-700 text-indigo-600 focus:ring-indigo-500">
+          <span>Format Estetis Chat &amp; Italic Asing</span>
+        </label>
+      </div>
+
+      <!-- Dua Tombol Aksi Utama -->
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+        <div class="flex items-center gap-2 bg-slate-950 px-3 py-2 rounded-xl border border-slate-800 text-xs text-slate-300">
+          <i class="fa-solid fa-bolt-lightning text-amber-400"></i>
+          <span>Kecepatan AI:</span>
+          <select id="concurrencySelect" class="bg-slate-800 text-amber-300 font-semibold px-2 py-1 rounded border border-slate-700 focus:outline-none" fdprocessedid="85bjf7">
+            <option value="4" selected="">Turbo Paralel (4 Batch Sekaligus)</option>
+            <option value="6">Ekstrem Paralel (6 Batch Sekaligus)</option>
+            <option value="2">Stabil (2 Batch Sekaligus)</option>
+          </select>
+        </div>
+
+        <button onclick="runRegexClean()" class="bg-emerald-600/20 hover:bg-emerald-600/30 active:scale-[0.99] text-emerald-300 font-semibold text-xs px-4 py-3 rounded-xl border border-emerald-500/40 transition flex items-center justify-center gap-2 shadow-sm" title="Memproses 10.000+ kata hanya dalam 0,1 detik tanpa kuota / tanpa menunggu AI" fdprocessedid="kwyq6t">
+          <i class="fa-solid fa-bolt text-amber-400"></i>
+          <span>Kilat Lokal (0.1 Detik)</span>
+        </button>
+
+        <button onclick="runAIClean()" id="btnAiClean" class="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 active:scale-[0.99] text-white font-semibold text-xs px-5 py-3 rounded-xl shadow-lg shadow-indigo-600/30 transition flex items-center justify-center gap-2" fdprocessedid="8xuq3n">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span>AI Turbo Paralel</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal 7 Aturan Sistem AI -->
+  <div id="rulesModal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full p-6 shadow-2xl">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3 mb-4">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-sliders text-indigo-400"></i>
+          <h3 class="font-bold text-base text-white">7 Aturan Utama AI Editor Novel</h3>
+        </div>
+        <button onclick="toggleRulesModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-400 mb-3 leading-relaxed">
+        Instruksi sistem di bawah ini mengontrol cara AI Editor memproses naskah Anda. Anda dapat menyesuaikannya bila ada kebutuhan khusus pada novel Anda:
+      </p>
+
+      <textarea id="systemPromptInput" rows="13" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-xs text-slate-200 font-mono leading-relaxed focus:outline-none focus:border-indigo-500"></textarea>
+
+      <div class="flex flex-wrap justify-between items-center gap-3 mt-4 pt-3 border-t border-slate-800">
+        <button onclick="resetSystemPrompt()" class="text-xs text-slate-400 hover:text-slate-200 px-3 py-2 rounded-lg hover:bg-slate-800 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-rotate-left"></i> Kembalikan ke Aturan Default
+        </button>
+        <button onclick="saveAndCloseRules()" class="text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-5 py-2 rounded-xl shadow-md transition">
+          Simpan &amp; Terapkan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Pengaturan Metadata EPUB -->
+  <div id="epubModal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3 mb-4">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-book-bookmark text-amber-400"></i>
+          <h3 class="font-bold text-base text-white">Ekspor ke E-Book (.EPUB)</h3>
+        </div>
+        <button onclick="closeEpubModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+        Format <strong>cetak miring (<i>italic</i>)</strong>, <strong>kotak chat</strong>, dan <strong>Daftar Isi Bab otomatis</strong> akan dikemas ke dalam standar EPUB yang siap dibuka di Google Play Books, Apple Books, Kindle, maupun Moon+ Reader.
+      </p>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Judul Novel</label>
+          <input type="text" id="epubTitle" value="Novel Hasil Suntingan" placeholder="Masukkan judul novel..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-amber-500">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Nama Penulis / Penerjemah</label>
+          <input type="text" id="epubAuthor" value="Penulis Novel" placeholder="Masukkan nama penulis..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-amber-500">
+        </div>
+      </div>
+
+      <div class="flex justify-end items-center gap-2 mt-6 pt-3 border-t border-slate-800">
+        <button onclick="closeEpubModal()" class="text-xs text-slate-400 hover:text-slate-200 px-3 py-2 rounded-lg hover:bg-slate-800 transition">
+          Batal
+        </button>
+        <button onclick="generateEpubFile()" class="text-xs bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2 rounded-xl shadow-md transition flex items-center gap-1.5">
+          <i class="fa-solid fa-download"></i> Unduh File .EPUB
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. KONFIGURASI 7 ATURAN UTAMA AI EDITOR NOVEL
+    // =========================================================================
+    const DEFAULT_SYSTEM_PROMPT = `Kamu adalah AI editor teks novel profesional yang sangat ahli dalam membersihkan, memperbaiki, dan merapikan hasil scan/OCR dari file PDF berbahasa Indonesia.
+
+Aturan Utama & Penanganan Khusus yang WAJIB dipatuhi:
+1. Pembersihan Artefak OCR & Simbol Liar: Hapus atau perbaiki simbol-simbol sampah hasil kesalahan OCR seperti angka acak yang menyempil di tengah kalimat/kata (misal "m4kan" -> "makan", "b3rjalan" -> "berjalan"), simbol @, |, /, \\, ~, atau karakter aneh lainnya yang merusak bacaan, KECUALI jika simbol tersebut memang bagian dari format khusus (seperti format chat).
+2. Perbaikan Typo & OCR Rusak: Perbaiki kata-kata yang salah akibat OCR (contoh: "rn" jadi "m", "cl" jadi "d", "l" jadi "i", angka "0" jadi "o", "1" jadi "l", dll.), perbaikan kata sambung, kata depan (di/ke), dan imbuhan sesuai PUEBI/EYD.
+3. Penanganan Bahasa Asing: Jika ada istilah atau kalimat dalam bahasa asing (seperti Bahasa Inggris, Korea, Jepang, dll.), pertahankan bahasa tersebut, perbaiki penulisannya jika ada typo, dan berikan cetak miring menggunakan tag HTML <i>...</i> (JANGAN gunakan tanda bintang *) jika itu istilah asing atau dialog batin sesuai kaidah penulisan novel.
+4. Format Chat / Pesan Singkat: Jika dalam novel ada adegan pesan teks/chat, biasanya berformat "Nama Pengirim: Isi pesan" (contoh: "Kalina Laluna: Yaudah sih, besok juga oke"). Rapikan dengan format alami "Nama Pengirim: Isi pesan" di baris tersendiri tanpa menambahkan kurung siku []. HATI-HATI: Jangan pernah mengubah kalimat narasi biasa yang memiliki tanda titik dua (:) menjadi format chat!
+5. Perbaikan Tanda Baca & Paragraf: Kembalikan tanda baca yang hilang (terutama tanda petik dialog "..." yang sering hilang saat OCR) dan sambung kembali paragraf yang terpecah-pecah akibat patahan baris PDF. Pastikan setiap pergantian dialog antar-tokoh memiliki paragraf baru yang jelas.
+6. Jaga Keaslian Cerita: DILARANG mengubah alur, memotong kalimat cerita, mengubah nama tokoh, atau mengubah gaya bahasa asli penulis. Fokus murni pada pembersihan OCR dan proofreading.
+7. Kecepatan & Efisiensi: Berikan HANYA hasil suntingan teks novel secara bersih dan langsung pada inti teks novel TANPA basa-basi pengantar, catatan, atau penutup apa pun dari AI.`;
+
+    document.getElementById('systemPromptInput').value = DEFAULT_SYSTEM_PROMPT;
+
+    let isCancelled = false;
+    let isPreviewMode = true;
+
+    // =========================================================================
+    // 2. FUNGSI UTILITAS UI, TOAST & MODAL ATURAN AI
+    // =========================================================================
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      if (!container) return;
+
+      const colors = {
+        success: 'bg-emerald-950/95 border-emerald-500/40 text-emerald-200',
+        warning: 'bg-amber-950/95 border-amber-500/40 text-amber-200',
+        error: 'bg-rose-950/95 border-rose-500/40 text-rose-200',
+        info: 'bg-slate-900/95 border-indigo-500/40 text-indigo-200'
+      };
+      const icons = {
+        success: 'fa-circle-check text-emerald-400',
+        warning: 'fa-triangle-exclamation text-amber-400',
+        error: 'fa-circle-xmark text-rose-400',
+        info: 'fa-circle-info text-indigo-400'
+      };
+
+      const toast = document.createElement('div');
+      toast.className = `pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-xl border shadow-xl backdrop-blur-md text-xs font-medium transition-all duration-300 ${colors[type] || colors.info}`;
+      toast.innerHTML = `<i class="fa-solid ${icons[type] || icons.info} text-sm"></i><span>${message}</span>`;
+
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(8px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 3200);
+    }
+
+    function toggleRulesModal() {
+      const modal = document.getElementById('rulesModal');
+      if (modal) modal.classList.toggle('hidden');
+    }
+
+    function resetSystemPrompt() {
+      document.getElementById('systemPromptInput').value = DEFAULT_SYSTEM_PROMPT;
+      showToast('Aturan sistem AI dikembalikan ke pengaturan awal.', 'info');
+    }
+
+    function saveAndCloseRules() {
+      toggleRulesModal();
+      showToast('7 Aturan AI Editor berhasil disimpan dan diterapkan!', 'success');
+    }
+
+    // =========================================================================
+    // 3. PERHITUNGAN STATISTIK KATA, KARAKTER & ESTIMASI BATCH PARALEL
+    // =========================================================================
+    function updateStats(type) {
+      const el = document.getElementById(type + 'Text');
+      if (!el) return;
+
+      const rawVal = el.value || '';
+      const cleanVal = type === 'output' ? stripItalicMarkers(rawVal) : rawVal;
+      const trimmed = cleanVal.trim();
+      const words = trimmed ? trimmed.split(/\s+/).length : 0;
+      const chars = cleanVal.length;
+
+      const wordsEl = document.getElementById(type + 'Words');
+      const charsEl = document.getElementById(type + 'Chars');
+      if (wordsEl) wordsEl.innerText = words.toLocaleString('id-ID');
+      if (charsEl) charsEl.innerText = chars.toLocaleString('id-ID');
+
+      if (type === 'input') {
+        const batches = words > 0 ? Math.ceil(words / 2200) : 0;
+        const batchEl = document.getElementById('batchCount');
+        if (batchEl) batchEl.innerText = batches;
+      }
+    }
+
+    // =========================================================================
+    // 4. DETEKSI ADEGAN CHAT & ISTILAH ASING (KETAT & AKURAT)
+    // =========================================================================
+    function isChatLine(line) {
+      const trimmed = line.replace(/^[@|~\\\/]+/, '').trim();
+      if (!trimmed || trimmed.length > 220) return false;
+      // Jangan deteksi baris yang diawali tanda kutip dialog
+      if (/^["“”'‘’]/.test(trimmed)) return false;
+
+      // Pola 1: Jika di naskah asli memang sudah memakai kurung siku [Kalina Laluna]: Pesan
+      if (/^\[[A-Z][a-zA-Z0-9_.\s]{1,25}\]\s*:\s+.+/.test(trimmed)) return true;
+
+      // Pola 2: Format chat alami di novel -> "Kalina Laluna: Yaudah sih, besok juga oke"
+      // Syarat ketat: Sebelum titik dua harus 1-3 kata yang SETIAP katanya diawali Huruf Kapital (Title Case / Nama Orang)
+      const match = trimmed.match(/^([A-Z][a-zA-Z0-9.]*(?:\s+[A-Z][a-zA-Z0-9.]*){0,2})\s*:\s+(.+)$/);
+      if (!match) return false;
+
+      const sender = match[1].trim();
+      const words = sender.split(/\s+/);
+
+      // Daftar kata narasi/keterangan yang sering diikuti titik dua tapi BUKAN nama pengirim chat
+      const nonNameWords = new Set([
+        'bab', 'chapter', 'bagian', 'prolog', 'epilog', 'catatan', 'note', 'nb', 'ps',
+        'tempat', 'lokasi', 'waktu', 'tanggal', 'hari', 'jam', 'pukul', 'alamat',
+        'contoh', 'misalnya', 'yaitu', 'yakni', 'seperti', 'berikut', 'hasil', 'kesimpulan',
+        'pertama', 'kedua', 'ketiga', 'keempat', 'kelima', 'satu', 'dua', 'tiga',
+        'alasan', 'tujuan', 'syarat', 'aturan', 'jawaban', 'pertanyaan', 'pesan', 'isi',
+        'berita', 'pengumuman', 'judul', 'tema', 'status', 'ketika', 'saat', 'karena',
+        'Namun', 'Tetapi', 'Sedangkan', 'Sementara', 'Akhirnya', 'Kemudian', 'Lalu',
+        'Kata', 'Ujar', 'Tanya', 'Jawab', 'Bisik', 'Teriak', 'Sahut', 'Balas', 'Ucap',
+        'Batin', 'Pikir', 'Hati', 'Otak', 'Suara', 'Terbukti', 'Faktanya', 'Intinya', 'Masalahnya'
+      ]);
+
+      for (const w of words) {
+        if (nonNameWords.has(w) || nonNameWords.has(w.toLowerCase())) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    function formatChatLineClean(line) {
+      let trimmed = line.trim();
+      // Bersihkan simbol sampah OCR di awal/akhir baris chat
+      trimmed = trimmed.replace(/^[@|~\\\/]+/, '').replace(/[|~\\\/]+$/, '').trim();
+      // Rapikan format menjadi "Kalina Laluna: Yaudah sih, besok juga oke" (tanpa kurung siku tambahan)
+      const match = trimmed.match(/^\[?([A-Z][a-zA-Z0-9.]*(?:\s+[A-Z][a-zA-Z0-9.]*){0,2})\]?\s*:\s*(.+)$/);
+      if (match) {
+        const sender = match[1].trim();
+        const msg = match[2].trim();
+        return `${sender}: ${msg}`;
+      }
+      return trimmed;
+    }
+
+    // =========================================================================
+    // 5. MESIN PEMBERSIH INSTAN LOKAL (ALGORITMA REGEX CERDAS)
+    // =========================================================================
+    function cleanTextWithRegex(rawText) {
+      const mergeLines = document.getElementById('optMergeLines').checked;
+      const keepChat = document.getElementById('optKeepChat').checked;
+      const fixTypo = document.getElementById('optFixTypoOCR').checked;
+
+      let lines = rawText.replace(/\r\n/g, '\n').split('\n');
+
+      // Tahap 1: Pembersihan Baris demi Baris
+      lines = lines.map(line => {
+        let trimmed = line.trim();
+        if (!trimmed) return '';
+
+        // Hapus nomor halaman berdiri sendiri atau header/footer hasil scan PDF (contoh: "BAB 1 | 12" -> "BAB 1", atau "14" -> "")
+        if (/^\d{1,4}$/.test(trimmed)) return '';
+        trimmed = trimmed.replace(/^((?:BAB|CHAPTER|BAGIAN)\s+\d+)\s*[\|\/\\~@-]+\s*\d+$/i, '$1');
+        trimmed = trimmed.replace(/^(Halaman|Page)\s+\d+\s*(dari|of)?\s*\d*$/i, '');
+
+        const isChat = keepChat && isChatLine(trimmed);
+
+        if (!isChat) {
+          // Hapus simbol liar OCR (@, |, \, ~, ^, `, §, ¨)
+          trimmed = trimmed.replace(/[@|\\~^`§¤¨°±²³µ¶·¸¹º]/g, '');
+          // Hapus garis miring liar yang berdiri sendiri atau di awal/akhir kata (kecuali s/d, dan/atau)
+          trimmed = trimmed.replace(/\s+\/\s+/g, ' ');
+          trimmed = trimmed.replace(/(^|\s)\/([a-zA-Z])/g, '$1$2');
+          trimmed = trimmed.replace(/([a-zA-Z])\/(\s|$|[.,!?])/g, '$1$2');
+        } else {
+          trimmed = formatChatLineClean(trimmed);
+        }
+
+        if (fixTypo) {
+          // Perbaiki angka acak yang menyempil di tengah kata (contoh: m4kan -> makan, b3rjalan -> berjalan, p1kiran4ya -> pikirannya)
+          trimmed = trimmed.replace(/([a-zA-Z])4([a-zA-Z])/g, (m, p1, p2) => {
+            // Khusus akhiran -4ya sering berasal dari -nya pada OCR rusak
+            if (p1.toLowerCase() === 'n' && p2.toLowerCase() === 'y') return p1 + 'n' + p2;
+            return p1 + 'a' + p2;
+          });
+          trimmed = trimmed.replace(/([a-zA-Z])0([a-zA-Z])/g, '$1o$2');
+          trimmed = trimmed.replace(/([a-zA-Z])1([a-zA-Z])/g, '$1i$2');
+          trimmed = trimmed.replace(/([a-zA-Z])3([a-zA-Z])/g, '$1e$2');
+          trimmed = trimmed.replace(/([a-zA-Z])5([a-zA-Z])/g, '$1s$2');
+          trimmed = trimmed.replace(/([a-zA-Z])6([a-zA-Z])/g, '$1g$2');
+          trimmed = trimmed.replace(/([a-zA-Z])8([a-zA-Z])/g, '$1b$2');
+          trimmed = trimmed.replace(/([a-zA-Z])[279]([a-zA-Z])/g, '$1$2');
+
+          // Perbaiki pola OCR "rn" -> "m" dan "cl" -> "d" serta "l" -> "i" di tengah kata
+          const ocrDictionary = [
+            [/\brnakan/gi, 'makan'], [/\brninum/gi, 'minum'], [/\brnalam/gi, 'malam'],
+            [/\brnata/gi, 'mata'], [/\brnasuk/gi, 'masuk'], [/\brnulai/gi, 'mulai'],
+            [/\brnobil/gi, 'mobil'], [/\brnungkin/gi, 'mungkin'], [/\brnelihat/gi, 'melihat'],
+            [/\brnenatap/gi, 'menatap'], [/\brnengapa/gi, 'mengapa'], [/\brnereka/gi, 'mereka'],
+            [/\brnuka/gi, 'muka'], [/\brnudah/gi, 'mudah'], [/\brnencari/gi, 'mencari'],
+            [/\brnenuju/gi, 'menuju'], [/\brnerasa/gi, 'merasa'], [/\brninta/gi, 'minta'],
+            [/\brnemegang/gi, 'memegang'], [/\brnelangkah/gi, 'melangkah'], [/\brnenghela/gi, 'menghela'],
+            [/\brnasih/gi, 'masih'], [/\brnau\b/gi, 'mau'], [/\brnana\b/gi, 'mana'],
+            [/\brnasa\b/gi, 'masa'], [/\brnati\b/gi, 'mati'], [/\brnuda\b/gi, 'muda'],
+            [/\brnenarik/gi, 'menarik'], [/\brnenjawab/gi, 'menjawab'], [/\brnenoleh/gi, 'menoleh'],
+            [/\brnenunggu/gi, 'menunggu'], [/\brnendengar/gi, 'mendengar'], [/\brnembuat/gi, 'membuat'],
+            [/\bkarnu\b/gi, 'kamu'], [/\bkarni\b/gi, 'kami'], [/\brurnah\b/gi, 'rumah'],
+            [/\bsarna\b/gi, 'sama'], [/\bnarna\b/gi, 'nama'], [/\blarna\b/gi, 'lama'],
+            [/\bsarnbil/gi, 'sambil'], [/\bcleras/gi, 'deras'], [/\bclengan/gi, 'dengan'],
+            [/\bclari\b/gi, 'dari'], [/\bclalam/gi, 'dalam'], [/\bclapat/gi, 'dapat'],
+            [/\bclia\b/gi, 'dia'], [/\bcliri/gi, 'diri'], [/\bclucluk/gi, 'duduk'],
+            [/\bjenclela/gi, 'jendela'], [/\bpacla\b/gi, 'pada'], [/\bsuclah/gi, 'sudah'],
+            [/\bticlak/gi, 'tidak'], [/\baclalah/gi, 'adalah'], [/\bIalu\b/g, 'Lalu'],
+            [/\bIaIu\b/g, 'Lalu'], [/\biNI\b/gi, 'ini'], [/\bkepacla/gi, 'kepada']
+          ];
+
+          ocrDictionary.forEach(([regex, replacement]) => {
+            trimmed = trimmed.replace(regex, (match) => {
+              if (match[0] === match[0].toUpperCase() && match[0] !== match[0].toLowerCase()) {
+                return replacement.charAt(0).toUpperCase() + replacement.slice(1);
+              }
+              return replacement;
+            });
+          });
+
+          // Pola generik awalan "rne-" atau "rnen-" atau "rnem-" di awal kata Bahasa Indonesia
+          trimmed = trimmed.replace(/\brne(n|m|l|r|w|y)/gi, (m, p1) => {
+            const prefix = m[0] === 'R' ? 'Me' : 'me';
+            return prefix + p1.toLowerCase();
+          });
+          trimmed = trimmed.replace(/\bcl(i|e|a|u|o)/gi, (m, p1) => {
+            const prefix = m[0] === 'C' ? 'D' : 'd';
+            return prefix + p1.toLowerCase();
+          });
+          // Pola umum OCR "rn" di tengah kata bahasa Indonesia (seperti: terns -> terus, karner -> kamar, dll.)
+          trimmed = trimmed.replace(/([aiueo])rn([aiueo])/gi, '$1m$2');
+        }
+
+        // Normalisasi tanda kutip rusak ('' atau ,,) dan spasi tanda baca
+        trimmed = trimmed.replace(/''/g, '"').replace(/,,/g, '"').replace(/[“”]/g, '"');
+        trimmed = trimmed.replace(/\s+([.,!?;:])/g, '$1');
+        trimmed = trimmed.replace(/([.,!?;:])([a-zA-Z])/g, '$1 $2');
+        trimmed = trimmed.replace(/\s{2,}/g, ' ');
+
+        // Lengkapi tanda baca/kutip dialog yang hilang di akhir baris dialog
+        if (/^"[^"]+$/.test(trimmed)) {
+          // Jika baris diawali tanda petik pembuka tapi lupa tanda petik penutup sebelum kata kerja dialog
+          trimmed = trimmed.replace(/^(".*?)(\s+(?:tanya|jawab|ujar|ucap|kata|bisik|teriak|sahut|gumam|lanjut|balas)\s+[A-Z].*)$/i, (_, dialogPart, tagPart) => {
+            let d = dialogPart.trim();
+            if (!/[.,!?…]$/.test(d)) d += ',';
+            return `${d}"${tagPart}`;
+          });
+          // Jika masih belum tertutup sampai ujung kalimat
+          if ((trimmed.match(/"/g) || []).length === 1) {
+            if (!/[.!?…]$/.test(trimmed)) trimmed += '.';
+            trimmed += '"';
+          }
+        }
+
+        // Pastikan kalimat dialog yang diakhiri kata pengantar dialog memiliki titik di ujung
+        if (/\b(tanya|jawab|ujar|ucap|kata|bisik|teriak|sahut|gumam)\s+[A-Z][a-zA-Z\s]+[^.!?"]$/.test(trimmed)) {
+          trimmed += '.';
+        }
+
+        // Format Italic otomatis untuk frasa bahasa Inggris/Korea/Jepang populer jika belum di-italic
+        if (keepChat) {
+          const foreignPhrases = [
+            /\b(last chance|on my way|okay|sorry|thank you|by the way|what the hell|oh my god|good morning|good night|see you|never mind|excuse me|please|no way|are you okay|i love you|saranghae|oppa|hyung|unni|noona|sunbae|chagiya|mianhae|gomawo|annyeong|arigatou|sumimasen|baka|senpai|kawaii|nani)\b/gi
+          ];
+          foreignPhrases.forEach(rx => {
+            trimmed = trimmed.replace(rx, (match, _, offset, fullStr) => {
+              const before = fullStr.slice(0, offset);
+              const after = fullStr.slice(offset + match.length);
+              const starsBefore = (before.match(/\*/g) || []).length;
+              if (starsBefore % 2 === 1 || before.endsWith('*') || after.startsWith('*') || before.endsWith('<i>') || after.startsWith('</i>')) {
+                return match;
+              }
+              return `<i>${match}</i>`;
+            });
+          });
+        }
+
+        return trimmed;
+      });
+
+      // Tahap 2: Penggabungan Paragraf Terpecah & Pemisahan Dialog
+      if (mergeLines) {
+        let mergedParagraphs = [];
+        let currentPara = '';
+
+        for (let i = 0; i < lines.length; i++) {
+          let line = lines[i];
+
+          if (line === '') {
+            if (currentPara) {
+              mergedParagraphs.push(currentPara);
+              currentPara = '';
+            }
+            continue;
+          }
+
+          const isHeading = /^(BAB|CHAPTER|BAGIAN|PROLOG|EPILOG)\b/i.test(line);
+          const isChat = keepChat && isChatLine(line);
+          const startsNewDialogue = /^"/.test(line);
+
+          if (isHeading || isChat) {
+            if (currentPara) {
+              mergedParagraphs.push(currentPara);
+              currentPara = '';
+            }
+            mergedParagraphs.push(line);
+            continue;
+          }
+
+          if (!currentPara) {
+            currentPara = line;
+          } else {
+            const prevEndsSentence = /[.!?…"\']$/.test(currentPara);
+            const prevHasDialogue = /^"/.test(currentPara);
+
+            // Jika baris sebelumnya terputus tanda hubung (-)
+            if (currentPara.endsWith('-') && /^[a-z]/.test(line)) {
+              currentPara = currentPara.slice(0, -1) + line;
+            } 
+            // Jika dialog baru dimulai, wajib jadi paragraf baru
+            else if (startsNewDialogue || prevHasDialogue) {
+              if (!prevEndsSentence && !startsNewDialogue) {
+                currentPara += ' ' + line;
+              } else {
+                mergedParagraphs.push(currentPara);
+                currentPara = line;
+              }
+            }
+            // Jika kalimat sebelumnya belum selesai (tidak diakhiri titik/tanda tanya/seru/petik)
+            else if (!prevEndsSentence || /^[a-z,]/.test(line)) {
+              currentPara += ' ' + line;
+            } 
+            // Gabungkan kalimat naratif pendek yang terpotong baris PDF
+            else {
+              currentPara += ' ' + line;
+            }
+          }
+        }
+        if (currentPara) mergedParagraphs.push(currentPara);
+        return mergedParagraphs.join('\n\n');
+      }
+
+      return lines.filter(l => l !== '').join('\n\n');
+    }
+
+    function runRegexClean() {
+      const raw = document.getElementById('inputText').value;
+      if (!raw.trim()) {
+        showToast('Masukkan atau muat contoh teks novel OCR terlebih dahulu.', 'warning');
+        return;
+      }
+      const cleaned = cleanTextWithRegex(raw);
+      document.getElementById('outputText').value = cleaned;
+      renderPreview();
+      updateStats('output');
+      document.getElementById('statusBadge').innerHTML = '<i class="fa-solid fa-bolt text-amber-400"></i> Selesai (Pembersihan Lokal Instan)';
+      showToast('Naskah berhasil dibersihkan secara instan tanpa tanda bintang!', 'success');
+    }
+
+    // =========================================================================
+    // 6. INTEGRASI GEMINI AI OTOMATIS DENGAN AUTO-BATCHING & EXPONENTIAL BACKOFF
+    // =========================================================================
+    function splitIntoChunks(text, maxWordsPerChunk = 2200) {
+      const paragraphs = text.split(/\n\s*\n/);
+      const chunks = [];
+      let currentChunk = [];
+      let currentWords = 0;
+
+      for (const para of paragraphs) {
+        const wordCount = para.trim().split(/\s+/).length;
+        if (currentWords + wordCount > maxWordsPerChunk && currentChunk.length > 0) {
+          chunks.push(currentChunk.join('\n\n'));
+          currentChunk = [para];
+          currentWords = wordCount;
+        } else {
+          currentChunk.push(para);
+          currentWords += wordCount;
+        }
+      }
+      if (currentChunk.length > 0) {
+        chunks.push(currentChunk.join('\n\n'));
+      }
+      return chunks;
+    }
+
+    async function callGeminiWithRetry(chunkText, systemPrompt) {
+      const apiKey = ""; // Otomatis disediakan oleh lingkungan runtime
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+
+      const payload = {
+        contents: [{
+          parts: [{
+            text: `Rapikan dan perbaiki teks novel OCR berikut sesuai aturan. Langsung berikan hasilnya tanpa pengantar:\n\n${chunkText}`
+          }]
+        }],
+        systemInstruction: {
+          parts: [{ text: systemPrompt }]
+        },
+        generationConfig: {
+          temperature: 0.1,
+          thinkingConfig: { thinkingBudget: 0 }
+        }
+      };
+
+      const delays = [600, 1200];
+      for (let attempt = 0; attempt <= delays.length; attempt++) {
+        try {
+          const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+
+          const result = await response.json();
+          const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (text) return text.trim();
+          throw new Error('Respons AI kosong');
+        } catch (err) {
+          if (attempt === delays.length) {
+            throw err;
+          }
+          await new Promise(res => setTimeout(res, delays[attempt]));
+        }
+      }
+    }
+
+    async function runAIClean() {
+      const rawText = document.getElementById('inputText').value.trim();
+      if (!rawText) {
+        showToast('Silakan tempelkan teks novel atau klik "Muat Contoh OCR Rusak" terlebih dahulu.', 'warning');
+        return;
+      }
+
+      const startTime = performance.now();
+      const systemPrompt = document.getElementById('systemPromptInput').value;
+      const concurrency = parseInt(document.getElementById('concurrencySelect')?.value || '4', 10);
+
+      // 1. Tampilkan hasil pembersihan lokal terlebih dahulu secara instan sambil menunggu AI menyempurnakan
+      const preCleaned = cleanTextWithRegex(rawText);
+      const chunks = splitIntoChunks(preCleaned, 2200);
+
+      isCancelled = false;
+      const overlay = document.getElementById('loadingOverlay');
+      const progressBar = document.getElementById('progressBar');
+      const progressPercent = document.getElementById('progressPercent');
+      const loadingTitle = document.getElementById('loadingTitle');
+      const outputArea = document.getElementById('outputText');
+
+      overlay.classList.remove('hidden');
+      // Isi sementara dengan hasil pre-cleaned supaya langsung siap
+      const finalOutput = [...chunks];
+      outputArea.value = finalOutput.join('\n\n');
+      let completedCount = 0;
+
+      try {
+        // Pemrosesan Paralel (Multi-Worker) sehingga beberapa bagian diproses serentak!
+        for (let i = 0; i < chunks.length; i += concurrency) {
+          if (isCancelled) break;
+
+          const batchSlice = chunks.slice(i, i + concurrency);
+          loadingTitle.innerText = `Memproses Serentak Bagian ${i + 1} - ${Math.min(i + concurrency, chunks.length)} dari ${chunks.length}...`;
+
+          await Promise.all(batchSlice.map(async (chunkText, idx) => {
+            const targetIndex = i + idx;
+            if (isCancelled) return;
+            try {
+              const aiResult = await callGeminiWithRetry(chunkText, systemPrompt);
+              finalOutput[targetIndex] = aiResult;
+            } catch (apiErr) {
+              // Pertahankan hasil cleanTextWithRegex yang sudah bersih jika koneksi gagal
+              finalOutput[targetIndex] = chunkText;
+            } finally {
+              completedCount++;
+              const pct = Math.min(100, Math.round((completedCount / chunks.length) * 100));
+              progressBar.style.width = `${pct}%`;
+              progressPercent.innerText = `${completedCount} dari ${chunks.length} bagian selesai (${pct}%)`;
+            }
+          }));
+
+          // Perbarui layar setiap satu gelombang paralel selesai
+          outputArea.value = finalOutput.join('\n\n');
+          renderPreview();
+          updateStats('output');
+        }
+
+        const durationSec = ((performance.now() - startTime) / 1000).toFixed(1);
+        progressBar.style.width = '100%';
+        progressPercent.innerText = `100% Selesai dalam ${durationSec} detik`;
+
+        if (isCancelled) {
+          document.getElementById('statusBadge').innerHTML = '<i class="fa-solid fa-circle-pause text-amber-400"></i> Dihentikan sebagian';
+          showToast('Proses AI dihentikan oleh pengguna.', 'warning');
+        } else {
+          document.getElementById('statusBadge').innerHTML = `<i class="fa-solid fa-bolt text-emerald-400"></i> Selesai dalam ${durationSec} dtk (${chunks.length} batch paralel)`;
+          showToast(`Selesai dalam ${durationSec} detik!`, 'success');
+        }
+      } catch (err) {
+        outputArea.value = preCleaned;
+        renderPreview();
+        updateStats('output');
+        document.getElementById('statusBadge').innerHTML = '<i class="fa-solid fa-check text-emerald-400"></i> Selesai';
+      } finally {
+        setTimeout(() => {
+          overlay.classList.add('hidden');
+          renderPreview();
+        }, 200);
+      }
+    }
+
+    function cancelProcess() {
+      isCancelled = true;
+    }
+
+    // =========================================================================
+    // 7. MODE BACA VISUAL, CONTOH TEKS OCR, SALIN & UNDUH (.TXT / .DOC)
+    // =========================================================================
+    function stripItalicMarkers(str) {
+      return str.replace(/\*([^*]+)\*/g, '$1').replace(/<\/?i>/gi, '').replace(/<\/?em>/gi, '');
+    }
+
+    function convertToHtmlItalic(str) {
+      // Ubah baik *kata* maupun <i>kata</i> menjadi elemen <i> asli tanpa bintang
+      return str
+        .replace(/&lt;i&gt;(.*?)&lt;\/i&gt;/gi, '<i class="text-amber-200/95 italic">$1</i>')
+        .replace(/&lt;em&gt;(.*?)&lt;\/em&gt;/gi, '<i class="text-amber-200/95 italic">$1</i>')
+        .replace(/\*([^*]+)\*/g, '<i class="text-amber-200/95 italic">$1</i>');
+    }
+
+    function syncFromRichEditor() {
+      const previewEl = document.getElementById('outputPreview');
+      const plainText = previewEl.innerText || '';
+      const words = plainText.trim() ? plainText.trim().split(/\s+/).length : 0;
+      document.getElementById('outputWords').innerText = words.toLocaleString('id-ID');
+      document.getElementById('outputChars').innerText = plainText.length.toLocaleString('id-ID');
+    }
+
+    function loadSampleText() {
+      const sample = `BAB 1 | 12
+
+Hujan cleras mengguyur kota Jakarta rnalam itu. Raka rnenatap keluar jenclela sambil rnemegang cangkir kopi yang suclah mulai dingin.
+Pikiran4ya melayang jauh ke kejadian tadi sore saat ia b3rjalan sendirian di koridor. Satu hal yang pasti: ia ticlak boleh menyerah sekarang.
+
+"Karnu yakin rnau pergi sekarang?" tanya Kalina clengan nada khawatir
+"Aku harus pergi, Kal. Ini last chance buat kita," jawab Raka sarnbil meraih jaketnya yang tergantung di balik pintu
+
+*Apakah keputusan ini benar? Aku bahkan ticlak tahu apa yang menungguku di sana,* batin Raka dalam hati.
+
+Tiba-tiba ponsel di sakunya bergetar. Beberapa pesan singkat rnasuk secara beruntun.
+Kalina Laluna: Jangan lupa bawa dokumen rahasianya!
+@Kalina Laluna : Yaudah sih, besok juga oke kalau rnalam ini hujan cleras. |
+Raka Pratama: Okay, on my way. Tunggu aku 10 rnenit lagi.
+
+13
+Raka rnenghela napas panjang. | Ia tahu perjalanan ini ticlak akan rnudah, @tetapi ia ticlak punya pilihan lain selain rnelangkah maju menembus dinginnya rnalam.`;
+
+      document.getElementById('inputText').value = sample;
+      updateStats('input');
+      showToast('Contoh teks OCR rusak berhasil dimuat! Klik tombol proses di bawah.', 'info');
+    }
+
+    function clearInput() {
+      document.getElementById('inputText').value = '';
+      updateStats('input');
+      showToast('Panel input telah dibersihkan.', 'info');
+    }
+
+    async function pasteFromClipboard() {
+      try {
+        const text = await navigator.clipboard.readText();
+        if (text) {
+          document.getElementById('inputText').value = text;
+          updateStats('input');
+          showToast('Teks berhasil ditempel dari Clipboard.', 'success');
+        } else {
+          showToast('Clipboard kosong atau tekan Ctrl+V langsung di kotak teks.', 'warning');
+        }
+      } catch (e) {
+        document.getElementById('inputText').focus();
+        showToast('Silakan tekan Ctrl+V (atau tahan & Tempel) di dalam kotak input.', 'info');
+      }
+    }
+
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        document.getElementById('inputText').value = e.target.result;
+        updateStats('input');
+        showToast(`File "${file.name}" berhasil dimuat.`, 'success');
+      };
+      reader.readAsText(file);
+      event.target.value = '';
+    }
+
+    function togglePreviewMode() {
+      isPreviewMode = !isPreviewMode;
+      const textarea = document.getElementById('outputText');
+      const preview = document.getElementById('outputPreview');
+      const btn = document.getElementById('previewBtn');
+      const btnText = document.getElementById('previewBtnText');
+      const icon = document.getElementById('previewIcon');
+
+      if (isPreviewMode) {
+        renderPreview();
+        textarea.classList.add('hidden');
+        preview.classList.remove('hidden');
+        btn.classList.replace('bg-slate-800', 'bg-indigo-600');
+        btn.classList.replace('border-slate-700', 'border-indigo-500');
+        icon.className = 'fa-solid fa-code text-white';
+        btnText.innerText = 'Lihat Teks Polos';
+      } else {
+        // Tampilkan teks polos tanpa tanda bintang dan tanpa tag HTML
+        textarea.value = stripItalicMarkers(textarea.value);
+        textarea.classList.remove('hidden');
+        preview.classList.add('hidden');
+        btn.classList.replace('bg-indigo-600', 'bg-slate-800');
+        btn.classList.replace('border-indigo-500', 'border-slate-700');
+        icon.className = 'fa-solid fa-italic text-indigo-400';
+        btnText.innerText = 'Mode Cetak Miring';
+      }
+    }
+
+    function renderPreview() {
+      const raw = document.getElementById('outputText').value.trim();
+      const previewContainer = document.getElementById('outputPreview');
+
+      if (!raw) {
+        previewContainer.innerHTML = '';
+        return;
+      }
+
+      const escaped = raw
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+
+      const blocks = escaped.split(/\n\s*\n/).map(block => {
+        const lines = block.split('\n');
+        // Cek apakah blok ini berisi percakapan chat
+        if (lines.every(l => isChatLine(stripItalicMarkers(l)))) {
+          const chatItems = lines.map(chatLine => {
+            const formattedChat = convertToHtmlItalic(chatLine);
+            const match = formattedChat.match(/^\[?([^\]\:]+)\]?\s*:\s*(.+)$/);
+            if (match) {
+              return `<div class="bg-slate-900/95 border border-slate-700/80 border-l-4 border-l-indigo-500 px-3.5 py-2 rounded-xl font-sans text-xs shadow-sm">
+                <span class="font-bold text-indigo-400">${match[1].trim()}:</span> <span class="text-slate-200">${match[2].trim()}</span>
+              </div>`;
+            }
+            return `<div class="bg-slate-900/95 border-l-4 border-indigo-500 px-3.5 py-2 rounded-r-xl font-sans text-xs text-slate-200">${formattedChat}</div>`;
+          }).join('');
+          return `<div class="space-y-1.5 my-3 max-w-lg">${chatItems}</div>`;
+        }
+
+        // Cek apakah Judul Bab
+        if (/^(BAB|CHAPTER|BAGIAN|PROLOG|EPILOG)\b/i.test(block.trim()) && block.trim().length < 40) {
+          return `<h3 class="text-center font-bold text-base tracking-widest uppercase text-indigo-300 pt-2 pb-1 border-b border-slate-800/80">${stripItalicMarkers(block.trim())}</h3>`;
+        }
+
+        // Paragraf Novel Reguler dengan render italic asli tanpa tanda bintang
+        const formattedPara = convertToHtmlItalic(block).replace(/\n/g, '<br>');
+        return `<p class="indent-7 text-justify leading-relaxed text-slate-100">${formattedPara}</p>`;
+      });
+
+      previewContainer.innerHTML = blocks.join('');
+    }
+
+    function copyOutput() {
+      const raw = document.getElementById('outputText').value;
+      if (!raw.trim()) {
+        showToast('Belum ada hasil suntingan untuk disalin.', 'warning');
+        return;
+      }
+
+      // Buat elemen Rich HTML sementara agar saat di-paste di Word / Google Docs tetap bercetak miring (italic) TANPA tanda bintang
+      const richContainer = document.createElement('div');
+      richContainer.style.position = 'fixed';
+      richContainer.style.left = '-9999px';
+      richContainer.innerHTML = raw.split(/\n\s*\n/).map(p => {
+        const htmlLine = p
+          .replace(/\*([^*]+)\*/g, '<i>$1</i>')
+          .replace(/\n/g, '<br>');
+        return `<p>${htmlLine}</p>`;
+      }).join('');
+
+      document.body.appendChild(richContainer);
+      const range = document.createRange();
+      range.selectNodeContents(richContainer);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      document.execCommand('copy');
+      selection.removeAllRanges();
+      document.body.removeChild(richContainer);
+
+      showToast('Teks berhasil disalin dengan format cetak miring (tanpa tanda bintang)!', 'success');
+    }
+
+    function downloadOutput(format) {
+      const text = document.getElementById('outputText').value;
+      if (!text.trim()) {
+        showToast('Belum ada hasil suntingan untuk diunduh.', 'warning');
+        return;
+      }
+
+      if (format === 'txt') {
+        const cleanPlain = stripItalicMarkers(text);
+        const blob = new Blob([cleanPlain], { type: 'text/plain;charset=utf-8' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'Novel_Hasil_Suntingan_Bersih.txt';
+        a.click();
+        showToast('File .TXT bersih (tanpa tanda bintang) berhasil diunduh.', 'success');
+      } else if (format === 'doc') {
+        const htmlParagraphs = text.split(/\n\s*\n/).map(p => {
+          const trimmed = p.trim();
+          const withItalic = trimmed
+            .replace(/\*([^*]+)\*/g, '<i>$1</i>')
+            .replace(/\n/g, '<br>');
+          if (/^(BAB|CHAPTER|BAGIAN|PROLOG|EPILOG)\b/i.test(trimmed) && trimmed.length < 40) {
+            return `<h2 style="font-family: 'Times New Roman', serif; font-size: 14pt; text-align: center; font-weight: bold; margin-top: 18pt; margin-bottom: 12pt;">${stripItalicMarkers(withItalic)}</h2>`;
+          }
+          if (isChatLine(stripItalicMarkers(trimmed))) {
+            return `<p style="font-family: 'Calibri', sans-serif; font-size: 11pt; background-color: #f1f5f9; border-left: 3pt solid #4f46e5; padding: 6pt 10pt; margin: 6pt 0;">${withItalic}</p>`;
+          }
+          return `<p style="font-family: 'Times New Roman', serif; font-size: 12pt; line-height: 1.5; text-indent: 24pt; text-align: justify; margin-bottom: 6pt;">${withItalic}</p>`;
+        }).join('');
+
+        const docContent = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'></head><body>${htmlParagraphs}</body></html>`;
+        const blob = new Blob(['\ufeff', docContent], { type: 'application/msword' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'Novel_Hasil_Suntingan_Bersih.doc';
+        a.click();
+        showToast('File Microsoft Word (.DOC) berhasil diunduh.', 'success');
+      }
+    }
+
+    // =========================================================================
+    // 8. GENERATOR EPUB STANDAR E-READER (ITALIC, CHAT BOX & DAFTAR ISI BAB)
+    // =========================================================================
+    function openEpubModal() {
+      const text = document.getElementById('outputText').value;
+      if (!text.trim()) {
+        showToast('Belum ada hasil suntingan untuk dijadikan EPUB.', 'warning');
+        return;
+      }
+      document.getElementById('epubModal').classList.remove('hidden');
+    }
+
+    function closeEpubModal() {
+      document.getElementById('epubModal').classList.add('hidden');
+    }
+
+    function escapeXml(unsafe) {
+      return unsafe
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function formatXhtmlParagraph(para) {
+      const trimmed = para.trim();
+      const lines = trimmed.split('\n');
+
+      // Cek apakah blok ini berisi percakapan chat (satu atau beberapa baris chat)
+      const isChatBlock = lines.some(l => isChatLine(stripItalicMarkers(l.trim())));
+
+      if (isChatBlock) {
+        const chatRows = lines.map(line => {
+          let safeLine = escapeXml(line.trim())
+            .replace(/&lt;i&gt;(.*?)&lt;\/i&gt;/gi, '<i>$1</i>')
+            .replace(/&lt;em&gt;(.*?)&lt;\/em&gt;/gi, '<i>$1</i>')
+            .replace(/\*([^*]+)\*/g, '<i>$1</i>');
+
+          // Pisahkan Nama Pengirim: Isi Pesan agar Nama Pengirim tercetak tebal (<b>) tanpa kurung siku
+          const match = safeLine.match(/^(\[?[^\]\:]+\]?)\s*:\s*(.+)$/);
+          if (match) {
+            const sender = match[1].replace(/^\[|\]$/g, '').trim();
+            const message = match[2].trim();
+            return `<p class="chat-msg"><b>${sender}:</b> ${message}</p>`;
+          }
+          return `<p class="chat-msg">${safeLine}</p>`;
+        }).join('\n    ');
+
+        // Gunakan tag semantik <blockquote> agar meskipun E-Reader mematikan CSS, tetap menjorok rapi
+        return `<blockquote class="chat-container">\n    ${chatRows}\n  </blockquote>`;
+      }
+
+      // Paragraf novel reguler
+      let safe = escapeXml(trimmed)
+        .replace(/&lt;i&gt;(.*?)&lt;\/i&gt;/gi, '<i>$1</i>')
+        .replace(/&lt;em&gt;(.*?)&lt;\/em&gt;/gi, '<i>$1</i>')
+        .replace(/\*([^*]+)\*/g, '<i>$1</i>')
+        .replace(/\n/g, '<br/>');
+
+      return `<p>${safe}</p>`;
+    }
+
+    async function generateEpubFile() {
+      const text = document.getElementById('outputText').value.trim();
+      if (!text) return;
+
+      const bookTitle = (document.getElementById('epubTitle').value || 'Novel Hasil Suntingan').trim();
+      const bookAuthor = (document.getElementById('epubAuthor').value || 'Penulis Novel').trim();
+      closeEpubModal();
+
+      try {
+        const zip = new JSZip();
+        // 1. File mimetype wajib di posisi pertama tanpa kompresi sesuai standar IDPF EPUB
+        zip.file('mimetype', 'application/epub+zip', { compression: 'STORE' });
+
+        // 2. META-INF/container.xml
+        zip.folder('META-INF').file('container.xml', `<?xml version="1.0" encoding="UTF-8"?>
+<container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
+  <rootfiles>
+    <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
+  </rootfiles>
+</container>`);
+
+        const oebps = zip.folder('OEBPS');
+
+        // 3. Stylesheet CSS untuk EPUB (Kompatibel dengan Mode Siang/Malam di Play Books, Apple Books, Kindle, Moon+ Reader)
+        oebps.file('style.css', `body {
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.7;
+  margin: 5%;
+  text-align: justify;
+}
+h1, h2 {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 1.8em;
+  margin-bottom: 1.2em;
+  page-break-before: always;
+}
+p {
+  text-indent: 1.5em;
+  margin-top: 0;
+  margin-bottom: 0.45em;
+}
+i, em {
+  font-style: italic;
+}
+blockquote.chat-container {
+  margin: 0.8em 1em;
+  padding: 0.6em 0.9em;
+  border-left: 3px solid #6366f1;
+  border-top: 1px solid #cbd5e1;
+  border-right: 1px solid #cbd5e1;
+  border-bottom: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-family: sans-serif;
+  font-size: 0.92em;
+  text-align: left;
+  page-break-inside: avoid;
+}
+p.chat-msg {
+  text-indent: 0 !important;
+  margin-top: 0.35em;
+  margin-bottom: 0.35em;
+  text-align: left;
+}`);
+
+        // 4. Pisahkan naskah per BAB agar menjadi Daftar Isi (TOC) otomatis di aplikasi pembaca EPUB
+        const rawBlocks = text.split(/\n\s*\n/);
+        const chapters = [];
+        let currentChapter = { title: 'Bagian 1', blocks: [] };
+
+        for (const block of rawBlocks) {
+          const cleanLine = stripItalicMarkers(block.trim());
+          if (/^(BAB|CHAPTER|BAGIAN|PROLOG|EPILOG)\b/i.test(cleanLine) && cleanLine.length < 50) {
+            if (currentChapter.blocks.length > 0) {
+              chapters.push(currentChapter);
+            }
+            currentChapter = { title: cleanLine, blocks: [] };
+          } else {
+            currentChapter.blocks.push(block);
+          }
+        }
+        if (currentChapter.blocks.length > 0) {
+          chapters.push(currentChapter);
+        }
+
+        let manifestItems = '';
+        let spineItems = '';
+        let navPoints = '';
+
+        chapters.forEach((ch, idx) => {
+          const fileId = `chapter_${idx + 1}`;
+          const fileName = `${fileId}.xhtml`;
+          const safeTitle = escapeXml(ch.title);
+          const bodyHtml = ch.blocks.map(b => formatXhtmlParagraph(b)).join('\n  ');
+
+          const xhtmlContent = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="id">
+<head>
+  <title>${safeTitle}</title>
+  <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+  <h2>${safeTitle}</h2>
+  ${bodyHtml}
+</body>
+</html>`;
+
+          oebps.file(fileName, xhtmlContent);
+          manifestItems += `    <item id="${fileId}" href="${fileName}" media-type="application/xhtml+xml"/>\n`;
+          spineItems += `    <itemref idref="${fileId}"/>\n`;
+          navPoints += `    <navPoint id="navPoint-${idx + 1}" playOrder="${idx + 1}">
+      <navLabel><text>${safeTitle}</text></navLabel>
+      <content src="${fileName}"/>
+    </navPoint>\n`;
+        });
+
+        const bookUuid = 'urn:uuid:' + Date.now() + '-novelocr';
+
+        // 5. File OPF (Package Metadata)
+        oebps.file('content.opf', `<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="BookId" version="2.0">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+    <dc:title>${escapeXml(bookTitle)}</dc:title>
+    <dc:creator opf:role="aut">${escapeXml(bookAuthor)}</dc:creator>
+    <dc:language>id</dc:language>
+    <dc:identifier id="BookId">${bookUuid}</dc:identifier>
+  </metadata>
+  <manifest>
+    <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
+    <item id="style" href="style.css" media-type="text/css"/>
+${manifestItems}  </manifest>
+  <spine toc="ncx">
+${spineItems}  </spine>
+</package>`);
+
+        // 6. File NCX (Table of Contents interaktif untuk E-Reader)
+        oebps.file('toc.ncx', `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN" "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd">
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
+  <head>
+    <meta name="dtb:uid" content="${bookUuid}"/>
+    <meta name="dtb:depth" content="1"/>
+    <meta name="dtb:totalPageCount" content="0"/>
+    <meta name="dtb:maxPageNumber" content="0"/>
+  </head>
+  <docTitle><text>${escapeXml(bookTitle)}</text></docTitle>
+  <navMap>
+${navPoints}  </navMap>
+</ncx>`);
+
+        const blob = await zip.generateAsync({ type: 'blob', mimeType: 'application/epub+zip' });
+        const safeFileName = bookTitle.replace(/[^a-zA-Z0-9_\-\s]/g, '').trim().replace(/\s+/g, '_') || 'Novel_Bersih';
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `${safeFileName}.epub`;
+        a.click();
+
+        showToast(`E-Book "${bookTitle}.epub" berhasil dibuat dengan format italic & daftar bab!`, 'success');
+      } catch (err) {
+        showToast('Gagal membuat EPUB: ' + err.message, 'error');
+      }
+    }
+
+    // Muat contoh teks otomatis saat pertama kali dibuka agar pengguna bisa langsung mencoba tombolnya
+    window.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('previewBtn');
+      const btnText = document.getElementById('previewBtnText');
+      const icon = document.getElementById('previewIcon');
+      btn.classList.replace('bg-slate-800', 'bg-indigo-600');
+      btn.classList.replace('border-slate-700', 'border-indigo-500');
+      icon.className = 'fa-solid fa-code text-white';
+      btnText.innerText = 'Lihat Teks Polos';
+
+      loadSampleText();
+    });
+  </script>
+
+<span id="PING_IFRAME_FORM_DETECTION" style="display: none;"></span></body></html>
