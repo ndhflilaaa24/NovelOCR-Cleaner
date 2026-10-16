@@ -60,17 +60,18 @@
 
       <!-- Status & Actions -->
       <div class="flex items-center gap-2 sm:gap-3">
-        <div class="hidden md:flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-xl text-xs text-emerald-300">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-          <span>AI Editor Siap Pakai</span>
+        <!-- Input API Key untuk Deployment Mandiri (Vercel / Netlify / Lokal) -->
+        <div class="flex items-center bg-slate-950/90 border border-slate-700/80 rounded-xl px-2.5 py-1.5 focus-within:border-indigo-500 transition">
+          <i class="fa-solid fa-key text-amber-400 text-xs mr-2" title="Isi Gemini API Key jika di-deploy ke Vercel/hosting sendiri"></i>
+          <input type="password" id="customApiKey" placeholder="Gemini API Key (Vercel)..." oninput="saveCustomApiKey(this.value)" class="bg-transparent text-xs text-slate-200 placeholder:text-slate-500 focus:outline-none w-36 sm:w-44" title="Jika di-host di Vercel, masukkan Gemini API Key gratis dari aistudio.google.com agar AI berjalan penuh">
         </div>
 
-        <button onclick="loadSampleText()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-xl border border-slate-700 transition flex items-center gap-1.5 shadow-sm" fdprocessedid="g9hrvq">
+        <button onclick="loadSampleText()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-xl border border-slate-700 transition flex items-center gap-1.5 shadow-sm">
           <i class="fa-solid fa-flask text-amber-400"></i>
-          <span>Muat Contoh OCR Rusak</span>
+          <span class="hidden sm:inline">Contoh OCR</span>
         </button>
 
-        <button onclick="toggleRulesModal()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-xl border border-slate-700 transition flex items-center gap-1.5 shadow-sm" title="Lihat &amp; Sesuaikan 7 Aturan Sistem AI" fdprocessedid="fxhl0k">
+        <button onclick="toggleRulesModal()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-xl border border-slate-700 transition flex items-center gap-1.5 shadow-sm" title="Lihat &amp; Sesuaikan 7 Aturan Sistem AI">
           <i class="fa-solid fa-sliders text-indigo-400"></i>
           <span class="hidden sm:inline">7 Aturan AI</span>
         </button>
@@ -346,6 +347,23 @@ Aturan Utama & Penanganan Khusus yang WAJIB dipatuhi:
     let isCancelled = false;
     let isPreviewMode = true;
 
+    // Muat API Key tersimpan (khusus untuk penggunaan di Vercel / Hosting luar)
+    function saveCustomApiKey(val) {
+      try {
+        localStorage.setItem('novelocr_gemini_api_key', val.trim());
+      } catch (e) {}
+    }
+
+    function getActiveApiKey() {
+      const inputEl = document.getElementById('customApiKey');
+      if (inputEl && inputEl.value.trim()) return inputEl.value.trim();
+      try {
+        return localStorage.getItem('novelocr_gemini_api_key') || "";
+      } catch (e) {
+        return "";
+      }
+    }
+
     // =========================================================================
     // 2. FUNGSI UTILITAS UI, TOAST & MODAL ATURAN AI
     // =========================================================================
@@ -614,7 +632,7 @@ Aturan Utama & Penanganan Khusus yang WAJIB dipatuhi:
         return trimmed;
       });
 
-      // Tahap 2: Penggabungan Paragraf Terpecah & Pemisahan Dialog
+      // Tahap 2: Penggabungan Paragraf Terpecah & Pemisahan Paragraf Cerdas (Anti-Numpuk di Vercel)
       if (mergeLines) {
         let mergedParagraphs = [];
         let currentPara = '';
@@ -622,6 +640,7 @@ Aturan Utama & Penanganan Khusus yang WAJIB dipatuhi:
         for (let i = 0; i < lines.length; i++) {
           let line = lines[i];
 
+          // Jika ada baris kosong di input asli, hormati sebagai pemisah paragraf
           if (line === '') {
             if (currentPara) {
               mergedParagraphs.push(currentPara);
@@ -630,9 +649,18 @@ Aturan Utama & Penanganan Khusus yang WAJIB dipatuhi:
             continue;
           }
 
+          // Pisahkan jika dalam 1 baris terdapat dua dialog langsung berdampingan (contoh: "..." kata A. "...")
+          line = line.replace(/([.!?…]"(?:\s+[^"]+?[.!?])?)\s+(")/g, '$1\n$2');
+          if (line.includes('\n')) {
+            const subLines = line.split('\n').map(s => s.trim()).filter(Boolean);
+            lines.splice(i, 1, ...subLines);
+            line = lines[i];
+          }
+
           const isHeading = /^(BAB|CHAPTER|BAGIAN|PROLOG|EPILOG)\b/i.test(line);
           const isChat = keepChat && isChatLine(line);
-          const startsNewDialogue = /^"/.test(line);
+          const startsNewDialogue = /^["“”]/.test(line);
+          const hasInternalDialogue = /,\s*["“”][A-Z]/.test(line);
 
           if (isHeading || isChat) {
             if (currentPara) {
@@ -646,34 +674,78 @@ Aturan Utama & Penanganan Khusus yang WAJIB dipatuhi:
           if (!currentPara) {
             currentPara = line;
           } else {
-            const prevEndsSentence = /[.!?…"\']$/.test(currentPara);
-            const prevHasDialogue = /^"/.test(currentPara);
+            const prevEndsSentence = /[.!?…"\”\']$/.test(currentPara);
+            const prevStartsDialogue = /^["“”]/.test(currentPara);
+            const prevEndsQuote = /["”]$/.test(currentPara);
+            const lineStartsLower = /^[a-z,]/.test(line);
+            const lineIsDialogueTag = /^(tanya|jawab|ujar|ucap|kata|bisik|teriak|sahut|gumam|lanjut|balas|pikir|batin|tambah|sambung|celetuk|gerutu|pekik|desis|elak|potong|sela)\b/i.test(line);
 
-            // Jika baris sebelumnya terputus tanda hubung (-)
-            if (currentPara.endsWith('-') && /^[a-z]/.test(line)) {
+            // 1. Jika baris sebelumnya terputus tanda hubung (-), wajib sambung kata
+            if (currentPara.endsWith('-') && /^[a-zA-Z]/.test(line)) {
               currentPara = currentPara.slice(0, -1) + line;
-            } 
-            // Jika dialog baru dimulai, wajib jadi paragraf baru
-            else if (startsNewDialogue || prevHasDialogue) {
-              if (!prevEndsSentence && !startsNewDialogue) {
-                currentPara += ' ' + line;
-              } else {
+            }
+            // 2. Jika kalimat di baris sebelumnya BELUM selesai (tidak diakhiri titik/tanda tanya/seru/kutip), atau baris baru diawali huruf kecil -> sambung!
+            else if (!prevEndsSentence || lineStartsLower) {
+              currentPara += ' ' + line;
+            }
+            // 3. Jika baris sebelumnya diakhiri tanda kutip ("...") dan baris baru adalah kata kerja dialog ("kata Dewi Ayu.") -> sambung!
+            else if (prevEndsQuote && lineIsDialogueTag) {
+              currentPara += ' ' + line;
+            }
+            // 4. Jika baris baru diawali dialog ("...") ATAU baris sebelumnya adalah paragraf dialog yang sudah selesai -> WAJIB PARAGRAF BARU!
+            else if (startsNewDialogue || prevStartsDialogue || hasInternalDialogue) {
+              mergedParagraphs.push(currentPara);
+              currentPara = line;
+            }
+            // 5. Deteksi Paragraf Baru pada Narasi PDF (Jika kalimat sebelumnya sudah selesai dengan titik '.')
+            else {
+              const currentWordCount = currentPara.split(/\s+/).length;
+              // Kata penanda awal paragraf baru dalam novel Indonesia
+              const newParaTransition = /^(Sementara itu|Tak lama kemudian|Beberapa saat kemudian|Keesokan harinya|Malam itu|Siang itu|Pagi itu|Sore itu|Senja itu|Ketika|Saat itu|Setelah|Sebelum|Sejak|Di sisi lain|Di tempat lain|Di dalam|Di luar|Di rumah|Di kamar|Di balik|Tiba-tiba|Mendadak|Namun|Akan tetapi|Meskipun begitu|Walaupun demikian|Sebuah|Seorang|Para\s|Kedua\s|Mereka\s)/i.test(line);
+              // Jika baris sebelumnya diakhiri titik DAN cukup pendek (< 62 karakter di PDF biasanya akhir paragraf), ATAU paragraf sudah cukup panjang (>= 75 kata), ATAU ada kata transisi paragraf baru
+              if (currentPara.endsWith(':') || newParaTransition || currentWordCount >= 75) {
                 mergedParagraphs.push(currentPara);
                 currentPara = line;
+              } else {
+                currentPara += ' ' + line;
               }
-            }
-            // Jika kalimat sebelumnya belum selesai (tidak diakhiri titik/tanda tanya/seru/petik)
-            else if (!prevEndsSentence || /^[a-z,]/.test(line)) {
-              currentPara += ' ' + line;
-            } 
-            // Gabungkan kalimat naratif pendek yang terpotong baris PDF
-            else {
-              currentPara += ' ' + line;
             }
           }
         }
         if (currentPara) mergedParagraphs.push(currentPara);
-        return mergedParagraphs.join('\n\n');
+
+        // Tahap 3: Pecah paragraf naratif yang masih terlalu panjang (> 130 kata) atau mengandung dialog tersembunyi di tengah paragraf
+        const finalParagraphs = [];
+        for (const para of mergedParagraphs) {
+          // Pisahkan jika ada dialog baru yang menempel setelah kalimat selesai di tengah paragraf
+          const splitDialogs = para
+            .replace(/([.!?…])\s+("[^"]+"(?:\s+(?:kata|tanya|jawab|ujar|ucap|bisik|teriak|sahut|gumam|balas)\s+[^.!?]+[.!?])?)/gi, '$1\n\n$2')
+            .replace(/([.!?…]"(?:\s+(?:kata|tanya|jawab|ujar|ucap|bisik|teriak|sahut|gumam|balas)\s+[^.!?]+[.!?])?)\s+([A-Z])/gi, '$1\n\n$2')
+            .split(/\n\s*\n/);
+
+          for (const subPara of splitDialogs) {
+            const words = subPara.trim().split(/\s+/);
+            // Jika paragraf narasi murni masih terlalu panjang (> 120 kata), bagi secara proporsional di batas kalimat
+            if (words.length > 120 && !/^["“”]/.test(subPara.trim())) {
+              const sentences = subPara.match(/[^.!?…]+[.!?…]+["”']?\s*/g) || [subPara];
+              let tempPara = '';
+              for (const s of sentences) {
+                const tempWords = (tempPara + ' ' + s).trim().split(/\s+/).length;
+                if (tempWords > 85 && tempPara.trim().length > 0) {
+                  finalParagraphs.push(tempPara.trim());
+                  tempPara = s;
+                } else {
+                  tempPara += (tempPara ? ' ' : '') + s.trim();
+                }
+              }
+              if (tempPara.trim()) finalParagraphs.push(tempPara.trim());
+            } else if (subPara.trim()) {
+              finalParagraphs.push(subPara.trim());
+            }
+          }
+        }
+
+        return finalParagraphs.join('\n\n');
       }
 
       return lines.filter(l => l !== '').join('\n\n');
@@ -720,7 +792,7 @@ Aturan Utama & Penanganan Khusus yang WAJIB dipatuhi:
     }
 
     async function callGeminiWithRetry(chunkText, systemPrompt) {
-      const apiKey = ""; // Otomatis disediakan oleh lingkungan runtime
+      const apiKey = getActiveApiKey(); // Gunakan API key input jika di Vercel, atau runtime key jika di Preview
       const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
       const payload = {
@@ -1305,6 +1377,13 @@ ${navPoints}  </navMap>
 
     // Muat contoh teks otomatis saat pertama kali dibuka agar pengguna bisa langsung mencoba tombolnya
     window.addEventListener('DOMContentLoaded', () => {
+      try {
+        const savedKey = localStorage.getItem('novelocr_gemini_api_key');
+        if (savedKey && document.getElementById('customApiKey')) {
+          document.getElementById('customApiKey').value = savedKey;
+        }
+      } catch (e) {}
+
       const btn = document.getElementById('previewBtn');
       const btnText = document.getElementById('previewBtnText');
       const icon = document.getElementById('previewIcon');
@@ -1314,6 +1393,7 @@ ${navPoints}  </navMap>
       btnText.innerText = 'Lihat Teks Polos';
 
       loadSampleText();
+      runRegexClean();
     });
   </script>
 
